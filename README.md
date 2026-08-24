@@ -215,10 +215,12 @@ a YAML header on top — it is a set of refusals.
 
 ### First it reads your product, then proposes a plan.
 
-If it can reach your repo, your running app or your site, it reads them —
-the nav is your product as your own users see it, and it beats a description
-typed into a chat. Then it drafts the whole thing and asks you to confirm it,
-rather than interviewing you for what it could have looked up.
+If it can reach your repo, your running app or your site, it reads them — the
+running order of your marketing page tells it which features matter and in
+what order, and the app tells it what those features actually look like.
+Neither answers the other's question. Then it drafts the whole thing and asks
+you to confirm it, rather than interviewing you for what it could have looked
+up.
 
 Four things have to be settled before a line of a composition gets written:
 
