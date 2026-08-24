@@ -14,6 +14,12 @@ ID="${1:-demo}"
 # fullest, not one from a phase that is still assembling.
 POSTER_FRAME="${2:-300}"
 
+# Delivery size. Default is the 8:5 page tile that matches the 1600x1000
+# canvas. A 16:9 composition ships at 1536:864 — both dimensions stay
+# 16-aligned, so no partial macroblock row. Set it alongside the canvas in
+# Root.tsx, never on its own.
+DELIVER="${DELIVER:-1536:960}"
+
 OUT="out"
 FRAMES="$OUT/$ID-frames"
 
@@ -42,7 +48,7 @@ npx remotion render "$ID" "$FRAMES" --sequence \
 # lands on what the composition drew; it is not a fix for tiling.
 "$FFMPEG" -y -framerate 30 -start_number 0 \
   -i "$FRAMES/element-%03d.jpeg" \
-  -vf "scale=1536:960:flags=lanczos,format=yuv420p" \
+  -vf "scale=${DELIVER}:flags=lanczos,format=yuv420p" \
   -c:v libx264 -profile:v high -level 4.0 \
   -pix_fmt yuv420p -crf 21 \
   -bf 0 -g 60 \
