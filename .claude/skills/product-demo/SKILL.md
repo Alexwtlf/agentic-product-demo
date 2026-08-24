@@ -30,9 +30,10 @@ found yourself is the fastest way to make a person regret starting.
 ### Read before you ask
 
 If you can reach the product — its repo, its running app, its live site —
-**read it and propose the whole plan.** The nav or the sidebar is the product
-as its own users see it, and it beats any description someone types into a
-chat. Then put the plan up and ask for one confirmation.
+**read it and propose the whole plan.** Take the running order from the
+marketing site and the screens from the app; neither answers the other's
+question, and question 2 below has the measurement showing why. Then put the
+plan up and ask for one confirmation.
 
 Ask outright only for what is not in the artifact:
 
