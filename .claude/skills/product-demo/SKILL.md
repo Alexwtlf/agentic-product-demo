@@ -58,7 +58,27 @@ them a form to fill in, and never ask them to mark up the composition.
 
 ### What has to be settled, however you get there
 
-#### Question zero: one feature, or the whole product?
+#### Question zero, part one: where does it live?
+
+Two destinations, and they are not the same film. Ask, or infer it from what
+they said — but never assume, because the assumption is invisible until the
+clip is wrong.
+
+**In a page section.** It autoplays, so it is muted and it repeats. It has to
+loop seamlessly (hard rule 5), stay short enough to survive the fifth repeat,
+and read with the sound off. Its title defaults to the section's own heading,
+and it should share a rhythm with its siblings in that row.
+
+**Standalone** — a launch video, a post, a YouTube upload, something in a
+deck. It plays once, on purpose, usually with sound, often after someone
+clicked. It does not need a loop seam. It can run 60–90s. It can end on a
+card, a CTA, a logo — anywhere it likes, because nothing cuts back to frame 0
+behind it.
+
+A launch film built as a page loop comes out short, silent, and ending exactly
+where it started. Nobody spots the cause; they just say it feels slight.
+
+#### Question zero, part two: one feature, or the whole product?
 
 Settle this first. Every answer below changes shape with it, and it is the one
 thing the request almost never says.
@@ -163,12 +183,13 @@ user has already shown they care.
   answered "fast", which is how a demo ends up rushing the steps it exists
   to show. State the default, name the alternatives, move on.
 
-  A feature demo lands at 14–25s and a product tour at 35–60s. *If the total
-  falls outside the band for the kind you were told,* say so and check —
-  usually it means a step was missed or a movement is really two. Past ~60s
-  it stops being a loop for a page section and becomes a launch film, which
-  is a different brief and worth confirming before you shoot it. Clips
-  sharing a row should share a rhythm, so match a sibling if there is one.
+  In a page section: a feature demo lands at 14–25s, a product tour at
+  35–60s, and clips sharing a row should share a rhythm — match a sibling if
+  there is one. Standalone: the ceiling lifts to 90s, because nobody is
+  watching it for the fifth time.
+
+  *If the total falls outside the band for the kind you were told,* say so and
+  check — usually it means a step was missed or a movement is really two.
 - **Where the delight budget goes.** One hero beat per phase. Name which
   element the phase is about and spend it there.
 
@@ -208,23 +229,27 @@ skip it.
 
 ## 2. What the viewer sees
 
-One of two clips, at 8:5 (shot 1600×1000, delivered 1536×960, 30fps) — see
-question zero in §1:
+Two axes, both settled in question zero (§1), and they multiply:
 
-- a **feature demo**, walking one real flow start to finish, 14–25s;
-- a **product tour**, three to five features as movements on a through-line,
-  35–60s.
+|  | **feature** — one flow | **product** — 3–5 movements |
+| --- | --- | --- |
+| **in a page section** | 14–25s, loops, muted | 35–60s, loops, muted |
+| **standalone** | up to 60s, plays once | up to 90s, plays once |
 
-Either way the viewer watches the thing get made. Not a teaser, and not a
-montage of output.
+Shot at 1600×1000, delivered 1536×960 (8:5) by default — a wide tile for a
+page. A standalone clip is usually better at 16:9; change the two numbers in
+`Root.tsx` and the scale filter in `render.sh` together.
 
-**Length follows the content, not a template.** A demo cut to a fixed length
-either rushes its steps or pads them, and both read immediately. See §1 for
-the arithmetic.
+Whichever cell you are in, the viewer watches the thing get made. Not a
+teaser, and not a montage of output.
 
-It has to work with the sound off: it will autoplay muted in a page, and
-autoplay with audio is blocked outright. Sound, if there is any, is a second
-pass — §7.
+**Length follows the content, not a template.** A clip cut to a fixed length
+either rushes its steps or pads them, and both read immediately.
+
+A page clip **has to work with the sound off** — it autoplays, and autoplay
+with audio is blocked outright. A standalone clip plays because someone
+pressed play, so sound is a real option there; either way it is a second pass
+over the finished file (§7), never a dependency of the picture.
 
 ---
 
@@ -294,9 +319,12 @@ understood. Debugging guide: `references/render.md`.
    move. The same push on a UI is shimmering text.
 4. **One layer of any given shot.** Hard-cut and unmount rather than fading
    a video in over an editor already playing it.
-5. **Dark ground, dark loop.** Start and end on the same dark field. The
-   title card makes this free. Phases dissolve **over** the frozen outgoing
-   phase — fading a phase out onto white is a brighter flash than the cut.
+5. **Dark ground, dark loop** — *for a page-section clip.* Start and end on
+   the same dark field, or the seam strobes on every repeat. The title card
+   makes this free. **A standalone clip is exempt from the seam** and may end
+   on a card or a logo; the dissolve rule still holds either way — phases
+   cross **over** the frozen outgoing phase, because fading one out onto white
+   is a brighter flash than the cut.
 6. **Restart a push at the source's own cut.** Find cuts with
    `ffmpeg -vf "select='gt(scene,0.25)'"`.
 7. **One still per timeline frame.** Never hold 24fps footage as
