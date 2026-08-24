@@ -1,0 +1,42 @@
+/* Placeholder palette. Swap these for your product's tokens and every
+ * composition follows — nothing downstream hardcodes a colour.
+ *
+ * Why tokens and not hex: mixToken() in motion.ts blends two of these
+ * through color-mix(in oklab, …), which is what lets a state change ramp
+ * instead of snapping. Pass it var(--token) strings; a hex defeats it.
+ *
+ * --ground is the dark field the title card and the loop seam both sit on.
+ * Keep it close in luminance to --background if your app UI is dark, or
+ * accept a dissolve between them if it is light. check-frames.mjs measures
+ * that seam and fails the render if it strobes. */
+
+:root {
+  /* app surfaces */
+  --background: oklch(0.145 0.02 265);
+  --foreground: oklch(0.985 0.003 248);
+  --card: oklch(0.205 0.025 265);
+  --muted: oklch(0.28 0.028 260);
+  --muted-foreground: oklch(0.72 0.03 257);
+  --border: oklch(0.3 0.03 260);
+
+  /* the one accent. One per frame — see titles.md. */
+  --brand: oklch(0.68 0.19 265);
+  --brand-soft: oklch(0.32 0.08 265);
+  --brand-strong: oklch(0.82 0.14 265);
+
+  /* the dark ground the clip opens, closes and loops on */
+  --ground: oklch(0.115 0.025 268);
+
+  --radius: 14px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
