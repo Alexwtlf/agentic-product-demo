@@ -228,17 +228,16 @@ up.
 
 Four things have to be settled before a line of a composition gets written:
 
-> **0a. Where does it live?** *In a page section* it autoplays, so it is muted
-> and it loops — short, seamless, readable with the sound off. *Standalone* —
-> a launch video, a post, a deck — it plays once because someone pressed play:
-> no seam to protect, sound is an option, and it can run to 90 seconds.
-> Assuming the first is how a launch film comes out short, silent and ending
-> where it started.
+> **0. A demo of the whole product, or a scene about one feature?** A product
+> demo strings three to five features into movements on a through-line; a
+> feature clip walks one flow start to finish. They are not the same clip at
+> different lengths.
 >
-> **0b. One feature, or the whole product?** A *feature demo* walks one flow
-> start to finish. A *product tour* strings three to five features into
-> movements on a through-line. They are not the same clip at different
-> lengths.
+> From that one answer it infers where the clip lives — whole product means a
+> standalone launch video that plays once, one feature means a muted loop in a
+> page section — and **tells you which it assumed**, because that assumption
+> decides the loop seam, the sound, the length ceiling and the ending. Both
+> crossings happen; correcting it costs a word.
 >
 > **1. What is being made on screen?** Not the feature — the thing the viewer
 > watches get built. "A revenue report", "a deploy going out".

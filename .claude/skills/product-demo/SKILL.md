@@ -60,49 +60,37 @@ them a form to fill in, and never ask them to mark up the composition.
 
 ### What has to be settled, however you get there
 
-#### Question zero, part one: where does it live?
+#### Question zero: the whole product, or one feature?
 
-Two destinations, and they are not the same film. Ask, or infer it from what
-they said — but never assume, because the assumption is invisible until the
-clip is wrong.
+Ask it in plain words, not as a taxonomy:
 
-**In a page section.** It autoplays, so it is muted and it repeats. It has to
-loop seamlessly (hard rule 5), stay short enough to survive the fifth repeat,
-and read with the sound off. Its title defaults to the section's own heading,
-and it should share a rhythm with its siblings in that row.
+> A demo of the whole product, or a scene about one feature?
 
-**Standalone** — a launch video, a post, a YouTube upload, something in a
-deck. It plays once, on purpose, usually with sound, often after someone
-clicked. It does not need a loop seam. It can run 60–90s. It can end on a
-card, a CTA, a logo — anywhere it likes, because nothing cuts back to frame 0
-behind it.
+**A product demo** strings three to five features into movements on a
+through-line. The viewer leaves knowing what the product *is*.
 
-A launch film built as a page loop comes out short, silent, and ending exactly
-where it started. Nobody spots the cause; they just say it feels slight.
+**A feature clip** walks one flow start to finish. The viewer leaves knowing
+how to do one thing.
 
-#### Question zero, part two: one feature, or the whole product?
+They are not the same clip at different lengths. A product demo cut as a
+feature clip shows one capability and hides the rest; a feature clip stretched
+into a tour skims four things and teaches none.
 
-Settle this first. Every answer below changes shape with it, and it is the one
-thing the request almost never says.
+#### Then infer where it lives — and say so, don't ask
 
-**A feature demo** walks one flow start to finish: pick a face → lock the
-sheet → render. One story, 14–25s. The viewer leaves knowing how to do one
-thing.
+The answer above predicts the destination almost every time. Take the default,
+state it in one line with the plan, and let them correct it with a word:
 
-**A product tour** strings several features together as movements with a
-through-line: read the URL → build the binder → cast the characters → cut the
-formats. Three to five movements, 35–60s. The viewer leaves knowing what the
-product *is*.
+| they said | assume | which means |
+| --- | --- | --- |
+| whole product | a **standalone** launch video | plays once after a click. No loop seam to protect, sound is available, up to 90s, may end on a card or a logo |
+| one feature | a clip **in a page section** | autoplays, so muted and looping. Seamless (hard rule 5), short enough to survive the fifth repeat, title from the section's heading, rhythm matched to its siblings |
 
-They are not the same clip at different lengths. A tour cut as a feature demo
-shows one capability and hides the rest. A feature demo cut as a tour skims
-four things and teaches none — which is the montage-of-output failure wearing
-a different hat.
-
-If they do not know, ask what the clip has to accomplish: "someone who has
-never heard of us should get it" is a tour; "people sign up and don't find
-this" is a feature demo.
-
+Both crossings are real and both happen — a 42s tour living in a page row, a
+feature walkthrough posted as a standalone short. That is why you say which
+one you assumed. **What you must not do is assume silently**: a launch film
+built as a page loop comes out short, silent and ending exactly where it
+started, and nobody names the cause — they just say it feels slight.
 
 **1. What is being made on screen?** One sentence. Not the product feature —
 the thing the viewer watches get built. "A revenue report", "a UGC ad for a
