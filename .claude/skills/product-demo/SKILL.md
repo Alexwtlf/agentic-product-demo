@@ -101,13 +101,25 @@ slideshow of screenshots.
 Either way the copy comes **from the live product, not invented**.
 *Getting this wrong is the only defect that cannot be fixed in the edit.*
 
-> **On reading their site to draft this.** A landing page is a fine place to
-> get a *shortlist* of features for a tour, and offering to read one saves the
-> user a paragraph. It is not a source for the steps. A landing page holds
-> claims; a demo needs the actual screens in the actual order, and inventing
-> those from marketing copy produces exactly the montage this skill exists to
-> prevent. Read it, propose the movements, and make them confirm each one
-> against the real UI.
+> **Read both the site and the app. They answer different questions.**
+>
+> The **marketing site** tells you *which* features matter and *in what
+> order* — the running order of its sections is the company's own ranking of
+> what it sells, and its headline is the promise the clip has to keep.
+>
+> The **app** tells you what those features actually look like: the real
+> screens, the real steps, the real copy on the buttons.
+>
+> Neither alone is enough, and the failure modes are opposite. Build a tour
+> from the site and you get a montage of claims with no screens under them.
+> Build it from the nav and you tour whatever happens to be in the sidebar —
+> Settings, Library, Analytics — while the three things the front page leads
+> with go unmentioned. This has been measured: a tour drafted from a sidebar
+> alone opened on the product's *third* priority, skipped two of its four
+> headline features, and included a screen the front page does not mention.
+>
+> So: take the running order from the site, take the screens from the app,
+> and say which came from where when you propose it.
 
 **3. What are the last 4–5 seconds?** The real payoff the flow is building
 toward. **If they have a file, they point at it. If they don't, ask which
