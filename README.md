@@ -15,8 +15,9 @@ questions. [What that looks like](#working-with-an-agent).
 
 ![A product demo rendered with this pipeline](docs/preview.gif)
 
-*Made with this pipeline, for [Athana](https://athana.ai). The example
-composition in this repo is a generic one — see [What's in it](#whats-in-it).*
+*Ten seconds of a real clip made with this pipeline, for
+[Athana](https://athana.ai). The example composition in this repo is a generic
+one — see [What's in it](#whats-in-it).*
 
 The hard part is not making a video. It is making one that does not look like
 a screen recording. This repo is the motion vocabulary, the render pipeline
