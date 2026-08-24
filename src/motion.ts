@@ -18,12 +18,127 @@
  * it is advertising. Do not invent one here.
  */
 
-import { Easing, interpolate, spring } from "remotion";
 import type { CSSProperties } from "react";
 
 /** Mirrors FPS in Root.tsx. Kept local so this stays a leaf module — Root
  *  imports the compositions, so importing Root back here would cycle. */
 const FPS = 30;
+
+/* ------------------------------------------------------------- the math --
+ *
+ * This file imports nothing. That is deliberate: the vocabulary below is the
+ * part of this kit worth stealing, and a dependency on the renderer would
+ * stop you stealing it. Everything here is pure functions of a frame number,
+ * so the same file works under Remotion, under Framer Motion, in a canvas
+ * loop, in React Native, or in whatever you render with next.
+ *
+ * Remotion ships equivalents of the three primitives below. They are inlined
+ * rather than imported for exactly that reason — not because theirs are
+ * worse. */
+
+/** Cubic-bezier easing, the CSS `cubic-bezier(x1, y1, x2, y2)` curve.
+ *
+ *  x(t) and y(t) are both cubic beziers with endpoints pinned at 0 and 1, so
+ *  getting y for a given x means solving x(t) = input for t first. Newton's
+ *  method converges in a handful of steps for the well-behaved curves an
+ *  easing is; the bisection fallback covers the ones with a near-zero
+ *  derivative in the middle, where Newton stalls. */
+export function bezier(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+): (t: number) => number {
+  const curve = (a: number, b: number, t: number) => {
+    const c = 3 * a;
+    const bb = 3 * (b - a) - c;
+    const aa = 1 - c - bb;
+    return ((aa * t + bb) * t + c) * t;
+  };
+  const slope = (a: number, b: number, t: number) => {
+    const c = 3 * a;
+    const bb = 3 * (b - a) - c;
+    const aa = 1 - c - bb;
+    return (3 * aa * t + 2 * bb) * t + c;
+  };
+
+  return (x: number) => {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+
+    let t = x;
+    for (let i = 0; i < 8; i++) {
+      const err = curve(x1, x2, t) - x;
+      if (Math.abs(err) < 1e-6) return curve(y1, y2, t);
+      const d = slope(x1, x2, t);
+      if (Math.abs(d) < 1e-6) break;
+      t -= err / d;
+    }
+
+    let lo = 0;
+    let hi = 1;
+    t = x;
+    while (hi - lo > 1e-6) {
+      if (curve(x1, x2, t) < x) lo = t;
+      else hi = t;
+      t = (lo + hi) / 2;
+    }
+    return curve(y1, y2, t);
+  };
+}
+
+/** Map x from [inA, inB] onto [outA, outB] through `easing`, clamped at both
+ *  ends. Clamping is not optional here: an unclamped ramp keeps travelling
+ *  after its window closes, and the element it drives drifts off screen
+ *  three seconds later where nobody connects it to the cause. */
+function span(
+  x: number,
+  inA: number,
+  inB: number,
+  outA: number,
+  outB: number,
+  easing: (t: number) => number,
+): number {
+  if (inB === inA) return outB;
+  const t = Math.min(1, Math.max(0, (x - inA) / (inB - inA)));
+  return outA + (outB - outA) * easing(t);
+}
+
+type SpringConfig = { damping: number; stiffness: number; mass: number };
+
+/** Position of a damped harmonic oscillator released at 0 and pulled to 1.
+ *
+ *  Underdamped (zeta < 1) overshoots and rings; critically damped and above
+ *  arrives without crossing. The analytical solution is used rather than a
+ *  step integrator so the value at a frame does not depend on how many
+ *  frames were computed before it — a renderer may ask for frame 200 without
+ *  ever having asked for frame 199. */
+function oscillator(t: number, { damping, stiffness, mass }: SpringConfig) {
+  const w0 = Math.sqrt(stiffness / mass);
+  const zeta = damping / (2 * Math.sqrt(stiffness * mass));
+  if (zeta < 1) {
+    const wd = w0 * Math.sqrt(1 - zeta * zeta);
+    return (
+      1 -
+      Math.exp(-zeta * w0 * t) *
+        (Math.cos(wd * t) + ((zeta * w0) / wd) * Math.sin(wd * t))
+    );
+  }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+
+/** How long the oscillator above takes to settle within `eps` of 1, from the
+ *  decay envelope rather than by sampling. Used to fit a whole spring —
+ *  overshoot included — inside a chosen number of frames. */
+function settleTime(config: SpringConfig, eps = 1e-3): number {
+  const { damping, stiffness, mass } = config;
+  const w0 = Math.sqrt(stiffness / mass);
+  const zeta = damping / (2 * Math.sqrt(stiffness * mass));
+  const decay = zeta < 1 ? zeta * w0 : w0;
+  const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : w0;
+  const amp = zeta < 1 ? Math.sqrt(1 + ((zeta * w0) / wd) ** 2) : 2;
+  return Math.max(1e-3, -Math.log(eps / amp) / decay);
+}
 
 /* ---------------------------------------------------------------- curves -- */
 
@@ -31,14 +146,18 @@ const FPS = 30;
  *  they were lifted from, so a value can be traced back to the stylesheet. */
 export const EASE = {
   /** ease-out-expo. The default. Everything entering or leaving. */
-  out: Easing.bezier(0.16, 1, 0.3, 1),
+  out: bezier(0.16, 1, 0.3, 1),
   /** ease-out-back. Overshoots. Only for a thing landing in its slot, and
    *  only once per clip — an overshoot everywhere reads as a toy. */
-  outBack: Easing.bezier(0.34, 1.56, 0.64, 1),
+  outBack: bezier(0.34, 1.56, 0.64, 1),
   /** Symmetric. Only for something already on screen that travels. */
-  inOut: Easing.bezier(0.45, 0, 0.55, 1),
+  inOut: bezier(0.45, 0, 0.55, 1),
+  /** Symmetric cubic, for a thing crossing the frame under its own power —
+   *  a cursor between two targets. Flatter in the middle than `inOut`. */
+  inOutCubic: (t: number) =>
+    t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2,
   /** The typographic curve. Titles only. */
-  word: Easing.bezier(0.22, 1, 0.36, 1),
+  word: bezier(0.22, 1, 0.36, 1),
 } as const;
 
 /* Never ease-in. It starts slow, which delays the exact moment the eye is
@@ -81,11 +200,7 @@ export function ramp(
   dur: number = DUR.panel,
   easing: (t: number) => number = EASE.out,
 ): number {
-  return interpolate(frame, [at, at + dur], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing,
-  });
+  return span(frame, at, at + dur, 0, 1, easing);
 }
 
 /** Linear blend, for driving a numeric style off a ramp. */
@@ -182,13 +297,18 @@ export function pop(
   frame: number,
   at: number,
   config: { damping?: number; stiffness?: number; mass?: number } = {},
+  durationInFrames: number = DUR.sheet,
 ): number {
-  return spring({
-    frame: frame - at,
-    fps: FPS,
-    config: { damping: 14, stiffness: 120, mass: 0.8, ...config },
-    durationInFrames: DUR.sheet,
-  });
+  const cfg = { damping: 14, stiffness: 120, mass: 0.8, ...config };
+  const elapsed = frame - at;
+  if (elapsed <= 0) return 0;
+  if (elapsed >= durationInFrames) return 1;
+  /* Time is scaled so the spring finishes settling exactly at
+   * durationInFrames instead of whenever its own physics happen to run out.
+   * Without this, `stiffness` doubles as a duration control and every tweak
+   * to the feel silently retimes the beat it lands on. */
+  const t = (elapsed / durationInFrames) * settleTime(cfg);
+  return oscillator(t, cfg);
 }
 
 /** A press that answers back: down fast, released on the same curve, and

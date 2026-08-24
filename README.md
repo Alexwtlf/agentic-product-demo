@@ -1,8 +1,9 @@
-# landing-loops
+# product-demo-kit
 
-A Remotion kit and an agent skill for the silent product-demo loops that sit
-in landing-page sections — the ones that autoplay muted and are supposed to
-show what your product actually does.
+A Remotion kit and an agent skill for silent product demo videos — the muted,
+looping clips that show what your software actually does. Put them in a
+landing section, in docs, in onboarding, in an app store listing, in a README,
+or in a post.
 
 The hard part is not making a video. It is making one that does not look like
 a screen recording. This repo is the motion vocabulary, the render pipeline
@@ -67,9 +68,9 @@ loop seam: frame 479 Y=20.0 -> frame 0 Y=20.0   jump 0.0
 | `src/compositions/Demo.tsx` | A worked example using every helper. Copy this, change the flow. |
 | `scripts/render.sh` | Sequence render → 1536×960 mp4 + poster → gate. |
 | `scripts/check-frames.mjs` | The detector above. |
-| `.claude/skills/landing-loop/` | The skill: the playbook an agent reads before touching any of it. |
+| `.claude/skills/product-demo/` | The skill: the playbook an agent reads before touching any of it. |
 
-Cursor users: copy `.claude/skills/landing-loop/` to `.cursor/skills/`.
+Cursor users: copy `.claude/skills/product-demo/` to `.cursor/skills/`.
 Everything else is the same file.
 
 ---
@@ -78,7 +79,7 @@ Everything else is the same file.
 
 These are the difference between a clip that reads as software and one that
 reads as a screenshot slideshow. Long form in
-`.claude/skills/landing-loop/references/motion.md`.
+`.claude/skills/product-demo/references/motion.md`.
 
 1. **A boolean in a style is a bug.** `on ? "var(--brand)" : "var(--border)"`
    snaps in one frame. Anchor a ramp at the frame the state changes and blend
@@ -120,7 +121,7 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 
 ## Working with an agent
 
-`.claude/skills/landing-loop/SKILL.md` is written to be read by Claude Code,
+`.claude/skills/product-demo/SKILL.md` is written to be read by Claude Code,
 Cursor, or anything else that loads skill files. It is not documentation with
 a YAML header on top — it is a set of refusals. The first section stops the
 agent inventing a story before you have told it one, because the failure mode
@@ -130,6 +131,42 @@ the product.
 If you only take one thing from this repo, take that section.
 
 ---
+
+## How much of this is Remotion
+
+Less than you'd expect, and on purpose.
+
+`src/motion.ts` — the vocabulary, and the part actually worth taking —
+**imports nothing at all.** The cubic-bezier solver, the clamped span and the
+damped oscillator behind `pop()` are written out in the file. It is pure
+functions of a frame number, so it works unchanged under Framer Motion, in a
+canvas loop, in React Native, or in a renderer you write yourself.
+
+Remotion appears in three files, as five symbols:
+
+```
+src/index.ts        registerRoot
+src/Root.tsx        Composition, Sequence, AbsoluteFill, useCurrentFrame
+src/title-card.tsx  AbsoluteFill
+src/fonts.ts        loadFont, from @remotion/google-fonts
+```
+
+What it does for that: bundles the React/TS app, drives a deterministic frame
+clock, runs headless Chromium, screenshots each frame, and gives you a Studio
+with a scrubbable timeline. The last one is not decoration — most of the work
+on a clip is "jump to frame 214, look, adjust," and without a scrubber every
+iteration costs a full render.
+
+You *can* replace it. A static server, `puppeteer-core`, a `window.setFrame(n)`
+hook and a screenshot loop is about 110 lines. What that version does not give
+you is the bundler — so compositions stop being typed React components and go
+back to being one hand-written HTML file — plus font-readiness gating, a way
+for a component to say "wait, I'm not ready yet", and the preview.
+
+The honest trade: rewriting the renderer means owning deterministic Chromium
+screenshotting, which is the exact layer the tiling bug at the top of this
+README lives in. You would inherit that one and find new ones, to remove a
+single dependency. Keep Remotion; keep `motion.ts` free of it.
 
 ## Licensing — read this before you build on it
 

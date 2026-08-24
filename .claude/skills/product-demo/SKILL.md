@@ -1,14 +1,15 @@
 ---
-name: landing-loop
+name: product-demo
 description: >-
-  Shoot, animate and title silent product-demo loops with Remotion. Use when
-  editing anything under src/compositions/, when the user asks for a new
-  landing demo, an intro or an animated title, says a clip feels dead or
-  looks like a screen recording, or reports tiling, flashing or flickering
-  in a rendered video.
+  Shoot, animate and title silent product demo videos with Remotion — for a
+  landing page, docs, onboarding, an app store listing or a social post. Use
+  when editing anything under src/compositions/, when the user asks for a new
+  demo clip, an intro or an animated title, says a clip feels dead or looks
+  like a screen recording, or reports tiling, flashing or flickering in a
+  rendered video.
 ---
 
-# Product-demo loops
+# Product demo videos
 
 One pipeline, three layers: the **story** (what the clip shows), the
 **motion** (how the interface behaves inside the frame), and the **title**

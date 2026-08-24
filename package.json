@@ -1,8 +1,8 @@
 {
-  "name": "landing-loops",
+  "name": "product-demo-kit",
   "version": "0.1.0",
   "private": false,
-  "description": "Remotion kit + agent skill for silent product-demo loops that don't look like screen recordings",
+  "description": "Remotion kit + agent skill for silent product demo videos that don't look like screen recordings",
   "license": "MIT",
   "type": "module",
   "scripts": {

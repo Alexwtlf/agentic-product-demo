@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Easing, interpolate } from "remotion";
+import { EASE, ramp } from "./motion";
 import { TYPE } from "./fonts";
 
 /**
@@ -46,11 +46,7 @@ export function trackPos(
   const a = keys[i];
   const b = keys[Math.min(i + 1, keys.length - 1)];
   if (a.at === b.at) return { x: a.x, y: a.y };
-  const t = interpolate(frame, [a.at, b.at], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
+  const t = ramp(frame, a.at, b.at - a.at, EASE.inOutCubic);
   return {
     x: Math.round(a.x + (b.x - a.x) * t),
     y: Math.round(a.y + (b.y - a.y) * t),

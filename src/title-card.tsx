@@ -3,7 +3,7 @@ import { DUR, EASE, mix, ramp } from "./motion";
 import { TYPE } from "./fonts";
 
 /**
- * The cold open. Full rationale: .claude/skills/landing-loop/references/titles.md
+ * The cold open. Full rationale: .claude/skills/product-demo/references/titles.md
  *
  * Words rise out of their own mask boxes, staggered, then the card holds
  * still long enough to be read and dissolves into the same dark ground the
