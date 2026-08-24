@@ -21,17 +21,45 @@ New clips copy that pipeline. Do not invent a second one.
 
 ---
 
-## 1. Ask first. Always.
+## 1. Settle the brief. Read what you can, ask what you can't.
 
-**Do not invent the story and do not start a composition until these are
-answered in the user's own words.** Ask in the chat and wait. If they answer
-in fragments ("dashboard, they filter it, end on the published report"),
-that is enough — translate it into keyframes yourself. Never hand them a
-form to fill in, and never ask them to mark up the composition.
+**Do not start a composition until the four things below are settled.** But
+*settled* is not the same as *asked* — and asking for what you could have
+found yourself is the fastest way to make a person regret starting.
 
-### Question zero: one feature, or the whole product?
+### Read before you ask
 
-Ask this first. Every answer below changes shape with it, and it is the one
+If you can reach the product — its repo, its running app, its live site —
+**read it and propose the whole plan.** The nav or the sidebar is the product
+as its own users see it, and it beats any description someone types into a
+chat. Then put the plan up and ask for one confirmation.
+
+Ask outright only for what is not in the artifact:
+
+- **what the clip is for** — a launch, a section nobody scrolls to, an
+  onboarding step. Intent is not in the code.
+- **which of several plausible payoffs is the real one**, when the assets on
+  disk offer more than one and nothing distinguishes them.
+
+Everything else — what is on screen, which flow, which features, how long —
+you can draft, and drafting it is your job. Propose, mark what you inferred,
+and be specific about what you would change on a "no". A person correcting a
+concrete plan gives you better answers in one line than an interview extracts
+in four.
+
+**Never generate an asset to stand in for the payoff**, and never substitute a
+lookalike. Proposing a real file that already exists is not inventing; making
+a new one is. If the disk is empty, that is the moment to ask.
+
+If they answer in fragments ("dashboard, they filter it, end on the published
+report"), that is enough — translate it into keyframes yourself. Never hand
+them a form to fill in, and never ask them to mark up the composition.
+
+### What has to be settled, however you get there
+
+#### Question zero: one feature, or the whole product?
+
+Settle this first. Every answer below changes shape with it, and it is the one
 thing the request almost never says.
 
 **A feature demo** walks one flow start to finish: pick a face → lock the
@@ -52,7 +80,6 @@ If they do not know, ask what the clip has to accomplish: "someone who has
 never heard of us should get it" is a tour; "people sign up and don't find
 this" is a feature demo.
 
-### The three that block
 
 **1. What is being made on screen?** One sentence. Not the product feature —
 the thing the viewer watches get built. "A revenue report", "a UGC ad for a

@@ -213,33 +213,35 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 Cursor, or anything else that loads skill files. It is not documentation with
 a YAML header on top — it is a set of refusals.
 
-### First it asks what kind of clip this is.
+### First it reads your product, then proposes a plan.
 
-> **One feature, or the whole product?** A *feature demo* walks one flow start
-> to finish — pick a face, lock the sheet, render. 14–25 seconds, and the
-> viewer leaves knowing how to do one thing. A *product tour* strings three to
-> five features together as movements on a through-line. 35–60 seconds, and
-> the viewer leaves knowing what the product is.
+If it can reach your repo, your running app or your site, it reads them —
+the nav is your product as your own users see it, and it beats a description
+typed into a chat. Then it drafts the whole thing and asks you to confirm it,
+rather than interviewing you for what it could have looked up.
+
+Four things have to be settled before a line of a composition gets written:
+
+> **0. One feature, or the whole product?** A *feature demo* walks one flow
+> start to finish — 14–25 seconds, and the viewer leaves knowing how to do one
+> thing. A *product tour* strings three to five features into movements on a
+> through-line — 35–60 seconds, and the viewer leaves knowing what the product
+> is. They are not the same clip at different lengths.
 >
-> They are not the same clip at different lengths, and the request almost
-> never says which one it wants.
-
-### Then three more, and it will not start without them.
-
-> **1. What is being made on screen?** One sentence. Not the product feature —
-> the thing the viewer watches get built. "A revenue report", "a deploy going
-> out", "a UGC ad for a supplement brand".
+> **1. What is being made on screen?** Not the feature — the thing the viewer
+> watches get built. "A revenue report", "a deploy going out".
 >
-> **2. Which flow does it walk, in order?** The real steps, with copy taken
-> from the live product. Query → filter → publish. Paste URL → binder.
+> **2. What does it walk, in order?** Real steps, or real features as
+> movements with something carrying the viewer between them. Copy comes from
+> the live product.
 >
-> **3. What are the last 4–5 seconds?** The real payoff the flow builds
-> toward. If you have the file, point at it — the agent may not invent a
-> stand-in or substitute a lookalike.
+> **3. What are the last 4–5 seconds?** The real payoff. It may propose a file
+> that already exists on your disk; it may not generate a stand-in or
+> substitute a lookalike.
 
-Fragments are fine as answers ("dashboard, they filter it, ends on the
-published report"). Turning that into keyframes is the agent's job. Handing
-you a form to fill in is not.
+It asks outright only for what is not in the artifact — what the clip is
+*for*, and which payoff is the real one when several would do. Fragments are
+fine as answers. Handing you a form to fill in is not.
 
 ### Then it shows you the shot list, and waits.
 
