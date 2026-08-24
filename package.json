@@ -1,8 +1,8 @@
 {
-  "name": "product-demo-kit",
+  "name": "agentic-product-demo",
   "version": "0.1.0",
   "private": false,
-  "description": "Remotion kit + agent skill for silent product demo videos that don't look like screen recordings",
+  "description": "Point your coding agent at your product and get a demo video back — built in React, not recorded off a screen",
   "license": "MIT",
   "type": "module",
   "scripts": {

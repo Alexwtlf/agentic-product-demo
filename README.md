@@ -1,9 +1,17 @@
-# product-demo-kit
+# Agentic Product Demo
 
-A Remotion kit and an agent skill for silent product demo videos — the muted,
+**Point your coding agent at your product and get a demo video back — built in
+React, not recorded off a screen.**
+
+A Remotion kit and an agent skill for silent product demo videos: the muted,
 looping clips that show what your software actually does. Put them in a
 landing section, in docs, in onboarding, in an app store listing, in a README,
 or in a post.
+
+Works with Claude Code, Cursor, or anything else that loads a skill file. What
+the agent does is real but not magic — it interviews you about the flow, writes
+the composition, renders it and checks the result. You still answer three
+questions. [What that looks like](#working-with-an-agent).
 
 ![A product demo rendered with this pipeline](docs/preview.gif)
 
