@@ -159,10 +159,33 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 
 `.claude/skills/product-demo/SKILL.md` is written to be read by Claude Code,
 Cursor, or anything else that loads skill files. It is not documentation with
-a YAML header on top — it is a set of refusals. The first section stops the
-agent inventing a story before you have told it one, because the failure mode
-of "make me a demo video" is a beautiful montage of output that never shows
-the product.
+a YAML header on top — it is a set of refusals.
+
+Say "make me a demo video" and the agent is required to stop and ask three
+things before it writes a line of a composition:
+
+> **1. What is being made on screen?** One sentence. Not the product feature —
+> the thing the viewer watches get built. "A revenue report", "a deploy going
+> out", "a UGC ad for a supplement brand".
+>
+> **2. Which flow does it walk, in order?** The real steps, with copy taken
+> from the live product. Query → filter → publish. Paste URL → binder.
+>
+> **3. What are the last 4–5 seconds?** The real payoff the flow builds
+> toward. If you have the file, point at it — the agent may not invent a
+> stand-in or substitute a lookalike.
+
+Fragments are fine as answers ("dashboard, they filter it, ends on the
+published report"). Turning that into keyframes is the agent's job. Handing
+you a form to fill in is not.
+
+Three more things it decides by itself and tells you in one line: the title
+text, the length, and which single element gets the hero beat of each phase.
+
+The reason for all of it: the failure mode of "make me a demo video" is a
+beautiful montage of output that never shows what a visitor would actually
+do. Getting question 2 wrong is the only defect that cannot be fixed in the
+edit — by the time you see it, the whole clip is built on it.
 
 If you only take one thing from this repo, take that section.
 
