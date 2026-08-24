@@ -3,10 +3,13 @@
 **Point your coding agent at your product and get a demo video back — built in
 React, not recorded off a screen.**
 
-A Remotion kit and an agent skill for silent product demo videos: the muted,
-looping clips that show what your software actually does. Put them in a
-landing section, in docs, in onboarding, in an app store listing, in a README,
-or in a post.
+A Remotion kit and an agent skill for product demo videos — the looping clips
+that show what your software actually does. Put them in a landing section, in
+docs, in onboarding, in an app store listing, in a README, or in a post.
+
+They are built to read with the sound off, because a clip autoplaying in a page
+has no choice. [Scoring one](#5-optionally-score-it) is a second pass over the
+finished file, for the places where a viewer taps to play.
 
 Works with Claude Code, Cursor, or anything else that loads a skill file. What
 the agent does is real but not magic — it interviews you about the flow, writes

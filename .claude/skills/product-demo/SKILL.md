@@ -1,12 +1,12 @@
 ---
 name: product-demo
 description: >-
-  Shoot, animate and title silent product demo videos with Remotion — for a
-  landing page, docs, onboarding, an app store listing or a social post. Use
-  when editing anything under src/compositions/, when the user asks for a new
-  demo clip, an intro or an animated title, asks for sound or a version for
-  social, says a clip feels dead or looks like a screen recording, or reports
-  tiling, flashing or flickering in a rendered video.
+  Shoot, animate, title and optionally score product demo videos with Remotion
+  — for a landing page, docs, onboarding, an app store listing or a social
+  post. Use when editing anything under src/compositions/, when the user asks
+  for a new demo clip, an intro or an animated title, asks for sound or a
+  version for social, says a clip feels dead or looks like a screen recording,
+  or reports tiling, flashing or flickering in a rendered video.
 ---
 
 # Product demo videos
