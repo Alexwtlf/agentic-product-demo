@@ -213,7 +213,18 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 Cursor, or anything else that loads skill files. It is not documentation with
 a YAML header on top — it is a set of refusals.
 
-### First it asks. Three things, and it will not start without them.
+### First it asks what kind of clip this is.
+
+> **One feature, or the whole product?** A *feature demo* walks one flow start
+> to finish — pick a face, lock the sheet, render. 14–25 seconds, and the
+> viewer leaves knowing how to do one thing. A *product tour* strings three to
+> five features together as movements on a through-line. 35–60 seconds, and
+> the viewer leaves knowing what the product is.
+>
+> They are not the same clip at different lengths, and the request almost
+> never says which one it wants.
+
+### Then three more, and it will not start without them.
 
 > **1. What is being made on screen?** One sentence. Not the product feature —
 > the thing the viewer watches get built. "A revenue report", "a deploy going

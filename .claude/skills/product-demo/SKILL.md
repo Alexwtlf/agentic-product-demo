@@ -29,6 +29,29 @@ in fragments ("dashboard, they filter it, end on the published report"),
 that is enough — translate it into keyframes yourself. Never hand them a
 form to fill in, and never ask them to mark up the composition.
 
+### Question zero: one feature, or the whole product?
+
+Ask this first. Every answer below changes shape with it, and it is the one
+thing the request almost never says.
+
+**A feature demo** walks one flow start to finish: pick a face → lock the
+sheet → render. One story, 14–25s. The viewer leaves knowing how to do one
+thing.
+
+**A product tour** strings several features together as movements with a
+through-line: read the URL → build the binder → cast the characters → cut the
+formats. Three to five movements, 35–60s. The viewer leaves knowing what the
+product *is*.
+
+They are not the same clip at different lengths. A tour cut as a feature demo
+shows one capability and hides the rest. A feature demo cut as a tour skims
+four things and teaches none — which is the montage-of-output failure wearing
+a different hat.
+
+If they do not know, ask what the clip has to accomplish: "someone who has
+never heard of us should get it" is a tour; "people sign up and don't find
+this" is a feature demo.
+
 ### The three that block
 
 **1. What is being made on screen?** One sentence. Not the product feature —
@@ -38,10 +61,26 @@ supplement brand", "a deploy going out".
 product can generate something but never shows what the visitor would
 actually do.*
 
-**2. Which flow does it walk, in order?** The real steps, with copy taken
-from the live product, not invented. Paste URL → binder. Pick face → lock
-sheet. Query → filter → publish.
+**2. What does it walk, in order?**
+
+*Feature demo:* the real steps of the one flow. Paste URL → binder. Pick face
+→ lock sheet. Query → filter → publish.
+
+*Product tour:* which features become movements, in what order, and what
+carries the viewer between them — a piece of state that survives the cut, a
+line of copy, one character who reappears. A tour with no through-line is a
+slideshow of screenshots.
+
+Either way the copy comes **from the live product, not invented**.
 *Getting this wrong is the only defect that cannot be fixed in the edit.*
+
+> **On reading their site to draft this.** A landing page is a fine place to
+> get a *shortlist* of features for a tour, and offering to read one saves the
+> user a paragraph. It is not a source for the steps. A landing page holds
+> claims; a demo needs the actual screens in the actual order, and inventing
+> those from marketing copy produces exactly the montage this skill exists to
+> prevent. Read it, propose the movements, and make them confirm each one
+> against the real UI.
 
 **3. What are the last 4–5 seconds?** The real payoff the flow is building
 toward. **If they have a file, they point at it. If they don't, ask which
@@ -84,10 +123,12 @@ user has already shown they care.
   answered "fast", which is how a demo ends up rushing the steps it exists
   to show. State the default, name the alternatives, move on.
 
-  *Do ask if the total comes out past ~45s.* Beyond that it stops being a
-  loop for a page section and becomes a launch film — a different brief,
-  worth confirming before you shoot it. And clips sharing a row should share
-  a rhythm, so match a sibling if there is one.
+  A feature demo lands at 14–25s and a product tour at 35–60s. *If the total
+  falls outside the band for the kind you were told,* say so and check —
+  usually it means a step was missed or a movement is really two. Past ~60s
+  it stops being a loop for a page section and becomes a launch film, which
+  is a different brief and worth confirming before you shoot it. Clips
+  sharing a row should share a rhythm, so match a sibling if there is one.
 - **Where the delight budget goes.** One hero beat per phase. Name which
   element the phase is about and spend it there.
 
@@ -127,14 +168,19 @@ skip it.
 
 ## 2. What the viewer sees
 
-A complete demo of a real flow, start to finish, at 8:5 (shot 1600×1000,
-delivered 1536×960, 30fps). Not a teaser and not a montage of output — the
-viewer watches the thing get made.
+One of two clips, at 8:5 (shot 1600×1000, delivered 1536×960, 30fps) — see
+question zero in §1:
 
-**Its length follows the flow, not a template.** Three steps is about 14
-seconds; the five-movement clip that argues for a whole product runs past 40.
-A demo cut to a fixed length either rushes the steps or pads them, and both
-read immediately. See §1 for the arithmetic.
+- a **feature demo**, walking one real flow start to finish, 14–25s;
+- a **product tour**, three to five features as movements on a through-line,
+  35–60s.
+
+Either way the viewer watches the thing get made. Not a teaser, and not a
+montage of output.
+
+**Length follows the content, not a template.** A demo cut to a fixed length
+either rushes its steps or pads them, and both read immediately. See §1 for
+the arithmetic.
 
 It has to work with the sound off: it will autoplay muted in a page, and
 autoplay with audio is blocked outright. Sound, if there is any, is a second

@@ -121,34 +121,37 @@ function stillSrc(index: number) {
 
 export function Athana() {
   const frame = useCurrentFrame();
+  /* Freeze the outgoing UI on the last frame before the film, so the
+   * dissolve sits on top of a still phase rather than a moving one. */
+  const ui = Math.min(frame, FILM_AT - 1);
 
-  const appIn = ramp(frame, APP_IN, DUR.sheet, EASE.out);
-  const toFilm = ramp(frame, FILM_AT, DUR.chip);
-  const appOut = 1 - toFilm;
-  const app = Math.min(appIn, appOut) * (1 - ramp(frame, OUT_AT, 20, EASE.out));
+  const appIn = ramp(ui, APP_IN, DUR.sheet, EASE.out);
+  const toFilm = ramp(frame, FILM_AT, DUR.sheet);
+  const app =
+    Math.min(appIn, 1 - toFilm) * (1 - ramp(frame, OUT_AT, 20, EASE.out));
 
-  const pointer = trackPos(frame, POINTER);
-  const down = downAt(frame, CLICKS);
+  const pointer = trackPos(ui, POINTER);
+  const down = downAt(ui, CLICKS);
 
-  const focus = ramp(frame, FIELD_CLICK, DUR.chip);
-  const text = typed(frame, TYPE_AT, PROMPT);
+  const focus = ramp(ui, FIELD_CLICK, DUR.chip);
+  const text = typed(ui, TYPE_AT, PROMPT);
   const typing = text.length > 0 && text.length < PROMPT.length;
 
-  const menuIn = ramp(frame, SKILL_CLICK, DUR.panel);
-  const menuOut = 1 - ramp(frame, CREATE_CLICK - 8, DUR.chip);
+  const menuIn = ramp(ui, SKILL_CLICK, DUR.panel);
+  const menuOut = 1 - ramp(ui, CREATE_CLICK - 8, DUR.chip);
   const menu = menuIn * menuOut;
 
-  const skillLit = ramp(frame, SKILL_PICK, DUR.chip);
-  const createReady = ramp(frame, SKILL_PICK, DUR.chip);
+  const skillLit = ramp(ui, SKILL_PICK, DUR.chip);
+  const createReady = ramp(ui, SKILL_PICK, DUR.chip);
 
-  const scenesOn = frame >= SCENES_AT && frame < FILM_AT;
+  const scenesOn = ui >= SCENES_AT;
   const filmOn = frame >= FILM_AT;
   const stillIndex = 1 + Math.min(STILL_COUNT - 1, Math.max(0, frame - FILM_AT));
   const filmPush = ramp(frame, FILM_AT + 8, 140, EASE.out);
 
   return (
     <AbsoluteFill style={{ background: "var(--ground)" }}>
-      {frame < FILM_AT && (
+      {frame < FILM_AT + DUR.sheet && (
         <AbsoluteFill
           style={{
             background: "var(--background)",
