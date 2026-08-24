@@ -91,6 +91,32 @@ user has already shown they care.
 - **Where the delight budget goes.** One hero beat per phase. Name which
   element the phase is about and spend it there.
 
+### Then show the shot list, and wait
+
+Before you write a line of a composition, put the beat sheet back in the chat.
+Not code — the plan. One line per phase: the frame it starts on, what happens,
+and which single element carries that phase.
+
+> ```
+> t0    title     "Acme Studio" · "Ask a question, publish the answer"
+> 0     query     types "Revenue by channel, last quarter", hits Run
+> 96    results   five channel rows stagger in, counter lands on 2,481
+> 184   filter    "Paid only" lights, the count re-counts to 312
+> 274   publish   press, confirmation springs into the slot
+> 380   out       folds back to the dark ground
+> ```
+> Four steps and a reveal, standard pace: 66 + 4×100 + 240 + 30 = 736 frames,
+> 24.5s. Ends on the published report card. Say "punchy" for ~18s.
+
+Then stop and let them read it. This is the only cheap moment left: a wrong
+flow costs one message here and a rebuilt composition later, and §1 question 2
+is the defect that cannot be fixed in the edit. A correction at this point is
+someone moving a line in a list.
+
+Keep it to the phases. Do not list every entrance and colour ramp — a shot
+list nobody finishes reading is not a checkpoint, and the point is that they
+answer.
+
 ### A reshoot skips all of this
 
 Fixing flicker, changing a zoom, recutting an outro on a clip whose plot is

@@ -231,6 +231,11 @@ Fragments are fine as answers ("dashboard, they filter it, ends on the
 published report"). Turning that into keyframes is the agent's job. Handing
 you a form to fill in is not.
 
+Then it writes the shot list back to you — one line per phase, the frame it
+starts on, and how the length was arrived at — and waits. That checkpoint
+exists because a wrong flow is the one defect that cannot be fixed in the
+edit: catching it costs a sentence here and a rebuilt composition later.
+
 Three more things it decides by itself and tells you in one line: the title
 text, the length, and which single element gets the hero beat of each phase.
 

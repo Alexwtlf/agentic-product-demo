@@ -2,3 +2,4 @@ node_modules
 out
 .cache
 .DS_Store
+public/payoff
