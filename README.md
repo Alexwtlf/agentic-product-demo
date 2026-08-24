@@ -3,13 +3,14 @@
 **Point your coding agent at your product and get a demo video back — built in
 React, not recorded off a screen.**
 
-An agent skill and a Remotion project for product demo videos — the looping
-clips that show what your software actually does. Put them in a landing section, in
-docs, in onboarding, in an app store listing, in a README, or in a post.
+An agent skill and a Remotion project for product demo videos — the clips that
+show what your software actually does. A muted loop for a landing section, or a
+launch video that plays once for a post, a doc, an app store listing or a deck.
 
-They are built to read with the sound off, because a clip autoplaying in a page
-has no choice. [Scoring one](#5-optionally-score-it) is a second pass over the
-finished file, for the places where a viewer taps to play.
+They are not the same film, and the agent settles which one before it starts: a
+page clip autoplays, so it loops and reads with the sound off, while a launch
+video plays because someone pressed play. [Sound](#5-optionally-score-it) is a
+second pass over the finished file either way.
 
 Works with Claude Code, Cursor, or anything else that loads a skill file. What
 the agent does is real but not magic — it interviews you about the flow, writes
@@ -153,9 +154,12 @@ bash scripts/add-sfx.sh myclip      # out/myclip-sound.mp4
 ```
 
 A clip autoplaying in a page **has to stay muted** — browsers block autoplay
-with audio, and a scored file simply will not start. So sound is a second
-output for social, docs and anywhere a viewer taps to play; the silent mp4
-stays the deliverable and is never overwritten.
+with audio, and a scored file simply will not start. So for a page loop the
+silent mp4 is the deliverable and the scored one is an extra.
+
+For a launch video nobody autoplays: sound can be the point, and the scored
+file is the one you ship. Either way the pass writes a new file and the silent
+original is never overwritten.
 
 The pass runs over the already-rendered mp4 and copies the video stream byte
 for byte (`-c:v copy`), so no frame is redrawn and the gate does not need
