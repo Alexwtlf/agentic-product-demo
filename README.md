@@ -43,6 +43,89 @@ Everything else is the same file.
 
 ---
 
+## Your first clip
+
+### The mental model
+
+A composition is a **pure function of the frame number**. `useCurrentFrame()`
+hands you N, you return what the screen looks like at frame N. Nothing is
+stateful and nothing animates on its own — if a value is not derived from the
+frame, it does not move.
+
+That is why every clip starts with a **beat sheet**: a block of named
+constants for the frame each thing happens on. Look at the top of
+`src/compositions/Demo.tsx` — `FIELD_CLICK = 20`, `RUN_CLICK = 88`,
+`TOAST_AT = 282`. Decide those before you write any JSX, because every
+entrance, colour change and cursor move is anchored to one of them.
+
+Elements are positioned in absolute pixels rather than with flexbox. A demo is
+choreography: you need to know where a button *is* in order to put a pointer
+on it at frame 214.
+
+### 1. Copy the example
+
+```bash
+cp src/compositions/Demo.tsx src/compositions/MyClip.tsx
+```
+
+Rename the export `Demo` → `MyClip` and `DEMO_LEN` → `MYCLIP_LEN`.
+
+### 2. Register it
+
+`src/Root.tsx` currently returns a single `<Composition>`. Wrap it in a
+fragment and add yours next to it:
+
+```tsx
+import { MyClip, MYCLIP_LEN } from "./compositions/MyClip";
+
+return (
+  <>
+    <Composition id="demo" /* … */ />
+    <Composition
+      id="myclip"
+      component={() => (
+        <Clip body={<MyClip />} name="My Product" kicker="One line of promise" />
+      )}
+      durationInFrames={MYCLIP_LEN + TITLE_LEN}
+      fps={FPS}
+      width={WIDTH}
+      height={HEIGHT}
+    />
+  </>
+);
+```
+
+### 3. Watch it
+
+```bash
+npm run studio          # localhost:3000, pick "myclip", scrub the timeline
+```
+
+Scrubbing is where the work happens. Jump to a beat, look at it, adjust the
+constant, look again.
+
+### 4. Render it
+
+```bash
+sh scripts/render.sh myclip 300     # 300 = which frame becomes the poster
+```
+
+`npm run render` is just this with `demo`. Output lands in `out/`.
+
+### Then make it yours
+
+1. `src/theme.css` — swap the placeholder tokens for your product's. Nothing
+   downstream hardcodes a colour.
+2. `src/fonts.ts` — swap the face. A `fontFamily` string alone loads nothing;
+   skip `loadFont()` and every frame silently renders in a system fallback.
+3. `src/motion.ts` — replace the curves with the ones from your own
+   stylesheet, so the film moves the way the product does.
+4. `MyClip.tsx` — replace the flow with the real steps of your product, in the
+   real order, with copy taken from the live UI. A demo that walks a flow the
+   product doesn't have proves nothing, however good it looks.
+
+---
+
 ## The eight motion rules
 
 These are the difference between a clip that reads as software and one that
@@ -72,21 +155,6 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 
 ---
 
-## Making it yours
-
-1. `src/theme.css` — swap the placeholder tokens for your product's. Nothing
-   downstream hardcodes a colour.
-2. `src/fonts.ts` — swap the face. Note that a `fontFamily` string alone
-   loads nothing; if you skip `loadFont()` every frame silently renders in a
-   system fallback.
-3. `src/motion.ts` — replace the curves with the ones from your own
-   stylesheet, so the film moves the way the product does.
-4. `src/compositions/Demo.tsx` — replace the flow. Use the real steps of your
-   product in the real order, with copy taken from the live UI. A demo that
-   walks a flow the product doesn't have proves nothing.
-
----
-
 ## Working with an agent
 
 `.claude/skills/product-demo/SKILL.md` is written to be read by Claude Code,
@@ -102,22 +170,15 @@ If you only take one thing from this repo, take that section.
 
 ## The frame gate
 
-Renders come back with individual frames corrupted: the page texture wrapped
-or mirrored inside an otherwise correct frame. It hits a handful of frames out
-of hundreds, at random. At 30fps that does not read as corruption — it reads
-as a flicker — and it survives every encoder setting you try, because the
-damage is baked into the JPEG before ffmpeg ever sees it.
+Every render is checked before it is allowed to pass.
 
-Remotion's docs recommend [`--concurrency=1`](https://www.remotion.dev/docs/flickering)
-for flickering, and `scripts/render.sh` always passes it. But a flag you have
-to remember is not a guarantee, and the same clip has a second failure nobody
-inspects: the loop seam, where the last frame cuts back to frame 0 every time
-the video repeats.
-
-So the render is gated. `scripts/check-frames.mjs` compares every frame's left
-half to its right half and flags the ones matching far better than their
-neighbours do, then checks full-frame luminance jumps, seam included. The
-render script fails on its failure.
+`scripts/check-frames.mjs` looks for two defects. **Corrupted frames**, where
+the page texture comes back wrapped or mirrored inside an otherwise correct
+frame — it hits a handful out of hundreds, at random, so it reads as a flicker
+rather than as damage, and no encoder setting fixes it because it is already
+baked into the JPEG. And **luminance jumps**, including the loop seam: the
+last frame cutting back to frame 0, which fires every time the video repeats
+and which nobody inspects.
 
 ```
 480 frames, 1536x960
@@ -129,44 +190,30 @@ luminance jumps over 25: none
 loop seam: frame 479 Y=20.0 -> frame 0 Y=20.0   jump 0.0
 ```
 
-**Known limitation:** frames that are nearly one flat colour have matching
-halves by definition, so the detector only judges frames with real contrast
-(`FLAT = 120` in the script). On a light, low-contrast UI it will miss
-corruption a dark one would catch. Lower the threshold if your product is
-pale, and do not raise it to make a failure go away.
+`scripts/render.sh` exits non-zero on a failure. Remotion's docs also
+recommend [`--concurrency=1`](https://www.remotion.dev/docs/flickering) for
+flickering and the render script always passes it — but a flag you have to
+remember is not a guarantee.
+
+**Known blind spot:** frames that are nearly one flat colour have matching
+halves by definition, so only frames with real contrast are judged
+(`FLAT = 120`). On a pale, low-contrast UI the detector will miss corruption a
+dark one would catch. Lower the threshold for a light product; never raise it
+to make a failure go away.
 
 ---
 
 ## How much of this is Remotion
 
-Less than you'd expect, and on purpose.
+`src/motion.ts` — the vocabulary, and the part worth taking — **imports
+nothing at all**: the bezier solver, the clamped span and the damped
+oscillator behind `pop()` are written out in the file. It works unchanged
+under Framer Motion, in a canvas loop, or in React Native.
 
-`src/motion.ts` — the vocabulary, and the part actually worth taking —
-**imports nothing at all.** The cubic-bezier solver, the clamped span and the
-damped oscillator behind `pop()` are written out in the file. It is pure
-functions of a frame number, so it works unchanged under Framer Motion, in a
-canvas loop, in React Native, or in a renderer you write yourself.
-
-Remotion appears in three files, as five symbols:
-
-```
-src/index.ts        registerRoot
-src/Root.tsx        Composition, Sequence, AbsoluteFill, useCurrentFrame
-src/title-card.tsx  AbsoluteFill
-src/fonts.ts        loadFont, from @remotion/google-fonts
-```
-
-What it does for that: bundles the React/TS app, drives a deterministic frame
-clock, runs headless Chromium, screenshots each frame, and gives you a Studio
-with a scrubbable timeline. The last one is not decoration — most of the work
-on a clip is "jump to frame 214, look, adjust," and without a scrubber every
-iteration costs a full render.
-
-You *can* replace it. A static server, `puppeteer-core`, a `window.setFrame(n)`
-hook and a screenshot loop is about 110 lines. What that version does not give
-you is the bundler — so compositions stop being typed React components and go
-back to being one hand-written HTML file — plus font-readiness gating, a way
-for a component to say "wait, I'm not ready yet", and the preview.
+Remotion itself is five symbols in three files — `registerRoot`,
+`Composition`, `Sequence`, `AbsoluteFill`, `useCurrentFrame`, plus `loadFont`.
+It bundles the app, drives the frame clock, runs headless Chromium and gives
+you the Studio.
 
 ---
 
