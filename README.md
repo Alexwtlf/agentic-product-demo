@@ -213,8 +213,7 @@ every glyph inside it. Move what is *in* the frame, never the frame.
 Cursor, or anything else that loads skill files. It is not documentation with
 a YAML header on top — it is a set of refusals.
 
-Say "make me a demo video" and the agent is required to stop and ask three
-things before it writes a line of a composition:
+### First it asks. Three things, and it will not start without them.
 
 > **1. What is being made on screen?** One sentence. Not the product feature —
 > the thing the viewer watches get built. "A revenue report", "a deploy going
@@ -231,18 +230,32 @@ Fragments are fine as answers ("dashboard, they filter it, ends on the
 published report"). Turning that into keyframes is the agent's job. Handing
 you a form to fill in is not.
 
-Then it writes the shot list back to you — one line per phase, the frame it
-starts on, and how the length was arrived at — and waits. That checkpoint
-exists because a wrong flow is the one defect that cannot be fixed in the
-edit: catching it costs a sentence here and a rebuilt composition later.
+### Then it shows you the shot list, and waits.
 
-Three more things it decides by itself and tells you in one line: the title
-text, the length, and which single element gets the hero beat of each phase.
+> ```
+> t0    title     "Acme Studio" · "Ask a question, publish the answer"
+> 0     query     types "Revenue by channel, last quarter", hits Run
+> 96    results   five channel rows stagger in, counter lands on 2,481
+> 184   filter    "Paid only" lights, the count re-counts to 312
+> 274   publish   press, confirmation springs into the slot
+> 380   out       folds back to the dark ground
+> ```
+>
+> Four steps and a reveal, standard pace: 66 + 4×100 + 240 + 30 = **736
+> frames, 24.5s**. Ends on the published report card. Say "punchy" for ~18s.
 
-The reason for all of it: the failure mode of "make me a demo video" is a
-beautiful montage of output that never shows what a visitor would actually
-do. Getting question 2 wrong is the only defect that cannot be fixed in the
-edit — by the time you see it, the whole clip is built on it.
+One line per phase, the frame it starts on, and the arithmetic behind the
+length — so a redirect costs you a word instead of a paragraph.
+
+That checkpoint is the whole reason the interview exists. The failure mode of
+"make me a demo video" is a beautiful montage of output that never shows what a
+visitor would actually do, and getting question 2 wrong is the one defect that
+cannot be fixed in the edit — by the time you see it, the entire clip is built
+on it. Correcting a line in that list costs a sentence. Correcting it after the
+composition exists costs a rebuild.
+
+Everything else it decides on its own and tells you in passing: the title copy,
+the pace, and which single element carries the hero beat of each phase.
 
 If you only take one thing from this repo, take that section.
 
