@@ -35,7 +35,7 @@ cd "$(dirname "$0")/.."
 
 ID="${1:-demo}"
 IN="out/$ID.mp4"
-OUT="out/$ID-sound.mp4"
+OUT="out/$ID${OUT_SUFFIX:--sound}.mp4"
 BEATS_FILE="scripts/beats/$ID.txt"
 
 FFMPEG="node_modules/ffmpeg-static/ffmpeg"
@@ -54,6 +54,15 @@ TITLE_OFFSET="${TITLE_OFFSET:-66}"
 
 [ -f "$IN" ] || { echo "no $IN — render it first: sh scripts/render.sh $ID"; exit 1; }
 [ -f "$BEATS_FILE" ] || { echo "no $BEATS_FILE — copy scripts/beats/demo.txt and score your clip"; exit 1; }
+
+# Never silently clobber a finished render. out/ is gitignored, so an
+# overwritten file is simply gone. FORCE=1 if you mean it.
+if [ -f "$OUT" ] && [ "${FORCE:-0}" != "1" ]; then
+  echo "$OUT already exists."
+  echo "  overwrite:   FORCE=1 bash scripts/add-sfx.sh $ID"
+  echo "  write next:  OUT_SUFFIX=-sound-v2 bash scripts/add-sfx.sh $ID"
+  exit 1
+fi
 
 mkdir -p "$SFX"
 
