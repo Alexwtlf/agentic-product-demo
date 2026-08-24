@@ -3,8 +3,8 @@
 **Point your coding agent at your product and get a demo video back — built in
 React, not recorded off a screen.**
 
-A Remotion kit and an agent skill for product demo videos — the looping clips
-that show what your software actually does. Put them in a landing section, in
+An agent skill and a Remotion project for product demo videos — the looping
+clips that show what your software actually does. Put them in a landing section, in
 docs, in onboarding, in an app store listing, in a README, or in a post.
 
 They are built to read with the sound off, because a clip autoplaying in a page
@@ -125,6 +125,12 @@ sh scripts/render.sh myclip 300     # 300 = which frame becomes the poster
 ```
 
 `npm run render` is just this with `demo`. Output lands in `out/`.
+
+The example runs 480 frames — 16 seconds. **That is a default, not a ceiling.**
+Length should follow your flow: budget roughly 100 frames per simple step and
+240 per movement that has its own beats, add 66 for the title, and set
+`DEMO_LEN` to the total. A three-step flow lands near 14 seconds; a full
+five-movement product story runs past 40. Nothing in the pipeline cares.
 
 ### 5. Optionally, score it
 

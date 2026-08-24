@@ -59,8 +59,16 @@ user has already shown they care.
 
 - **Title text.** Defaults to the headline of the section the clip sits in,
   with a kicker drawn from its body copy. 2.2s.
-- **Length.** 480 frames — 66 title + 414 flow. Clips in one row should
-  share a rhythm; don't change it without a reason.
+- **Length.** Derive it from the flow, never default to it. Budget ~100
+  frames for a simple step (a click, a panel arriving) and ~240 for a
+  movement that has its own internal beats (a list assembling, a belt
+  rotating), then add 66 for the title and ~30 for the outro. Three steps
+  lands near 14s, five near 21s, five movements near 42s. Say the number and
+  the arithmetic in one line.
+  *Ask only if it comes out past ~45s* — beyond that it stops being a loop
+  for a page section and becomes a launch film, which is a different brief
+  and worth confirming before you shoot it. Clips that sit in the same row
+  should share a rhythm, so match a sibling if there is one.
 - **Where the delight budget goes.** One hero beat per phase. Name which
   element the phase is about and spend it there.
 
@@ -74,9 +82,18 @@ skip it.
 
 ## 2. What the viewer sees
 
-A 14–22s silent loop at 8:5 (shot 1600×1000, delivered 1536×960, 30fps). It
-has to show the **real product flow**, not a reel of output. Silent: it will
-autoplay muted in a page, and it must work with no audio at all.
+A complete demo of a real flow, start to finish, at 8:5 (shot 1600×1000,
+delivered 1536×960, 30fps). Not a teaser and not a montage of output — the
+viewer watches the thing get made.
+
+**Its length follows the flow, not a template.** Three steps is about 14
+seconds; the five-movement clip that argues for a whole product runs past 40.
+A demo cut to a fixed length either rushes the steps or pads them, and both
+read immediately. See §1 for the arithmetic.
+
+It has to work with the sound off: it will autoplay muted in a page, and
+autoplay with audio is blocked outright. Sound, if there is any, is a second
+pass — §7.
 
 ---
 
