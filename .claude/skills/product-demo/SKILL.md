@@ -39,8 +39,10 @@ Ask outright only for what is not in the artifact:
 
 - **what the clip is for** — a launch, a section nobody scrolls to, an
   onboarding step. Intent is not in the code.
-- **which of several plausible payoffs is the real one**, when the assets on
-  disk offer more than one and nothing distinguishes them.
+- **which file the ending shows**, but *only* when the ending is media the
+  product generated and the disk offers several with nothing to choose
+  between them. An ending that is just the finished screen needs no asset and
+  no question — see question 3.
 
 Everything else — what is on screen, which flow, which features, how long —
 you can draft, and drafting it is your job. Propose, mark what you inferred,
@@ -48,7 +50,7 @@ and be specific about what you would change on a "no". A person correcting a
 concrete plan gives you better answers in one line than an interview extracts
 in four.
 
-**Never generate an asset to stand in for the payoff**, and never substitute a
+**Never generate an asset to stand in for a payoff**, and never substitute a
 lookalike. Proposing a real file that already exists is not inventing; making
 a new one is. If the disk is empty, that is the moment to ask.
 
@@ -142,14 +144,29 @@ Either way the copy comes **from the live product, not invented**.
 > So: take the running order from the site, take the screens from the app,
 > and say which came from where when you propose it.
 
-**3. What are the last 4–5 seconds?** The real payoff the flow is building
-toward. **If they have a file, they point at it. If they don't, ask which
-existing asset to use.** Never generate a stand-in and never substitute a
-lookalike.
-*This is the question that gets skipped and the one that costs most. A clip
-arguing "same face in every scene" that ends on a different person destroys
-its own claim — check that the thing in the payoff is the thing from the
-flow before you shoot.*
+**3. How does it end?** Usually you already know, and should not ask.
+
+**The default: it ends on the finished thing.** The flow completes and the
+last state stays on screen long enough to be read — the report published, the
+sheet locked, the short exported. That is drawn by the composition like every
+other frame; there is no separate asset and nothing to request. Hold it
+2–3 seconds. A clip that cuts the instant the last button is pressed feels
+like it was interrupted, and the viewer never sees the thing they were
+promised.
+
+Then: a page clip folds back to the dark ground it opened on (hard rule 5); a
+standalone one may end on a card, a logo, a CTA.
+
+**The exception, and the only time to ask: when the payoff is media the
+product generates** — a rendered video, a generated image, a character. Then
+it has to be a **real file that already exists**. Never generate a stand-in
+and never substitute a lookalike, because a fabricated payoff misrepresents
+the one thing a viewer is actually judging: output quality.
+
+*That case is also where these clips lie. A clip arguing "same face in every
+scene" that ends on a different person destroys its own claim in the last
+four seconds, and no edit repairs it. If the payoff is generated media, check
+that the thing in the ending is the thing from the flow before you shoot.*
 
 ### The three with defaults — state your choice, don't ask
 

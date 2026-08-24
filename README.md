@@ -243,9 +243,11 @@ Four things have to be settled before a line of a composition gets written:
 > movements with something carrying the viewer between them. Copy comes from
 > the live product.
 >
-> **3. What are the last 4–5 seconds?** The real payoff. It may propose a file
-> that already exists on your disk; it may not generate a stand-in or
-> substitute a lookalike.
+> **3. How does it end?** By default on the finished thing — the flow
+> completes and the last state holds long enough to read. No asset, no
+> question. Only when the ending is media your product *generates* does it
+> need a real file, and there it may propose one from your disk but never
+> fabricate a stand-in.
 
 It asks outright only for what is not in the artifact — what the clip is
 *for*, and which payoff is the real one when several would do. Fragments are
