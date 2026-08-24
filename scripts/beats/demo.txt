@@ -1,0 +1,52 @@
+# Beats for the `demo` composition.  bash scripts/add-sfx.sh demo
+#
+# FORMAT:  frame  sound  volume  pitch  note
+#
+# frame   A BODY frame — the same number as the constant in the beat sheet at
+#         the top of src/compositions/Demo.tsx. The script adds the title-card
+#         offset for you. Write `t42` for a beat on the title card itself.
+# sound   One of: key click tick pop swipe whoosh whoosh_soft impact riser fold
+#         Chosen by LEVEL OF MOTION, not by which element it is. See the
+#         palette at the top of add-sfx.sh.
+# volume  0.0–1.0. Most beats sit between 0.2 and 0.3; a hero press earns 0.8.
+# pitch   1.00 unless this beat is part of a run of identical repeats sitting
+#         close together. A single event is ALWAYS 1.00. Spread of ±6% inside
+#         a burst only — the machine-gun effect comes from density, not from
+#         which sound you picked.
+# note    Free text. Name the constant it is anchored to, so a retime is one
+#         search away.
+#
+# `type <first> <count> <step> <vol>` expands into a run of key hits.
+
+# --- the cold open ------------------------------------------------------
+t6     whoosh_soft   0.22   1.00   title words rise out of their masks
+t54    whoosh        0.30   1.00   SCREEN: title -> app
+
+# --- phase 1: the query -------------------------------------------------
+20     click         0.55   1.00   FIELD_CLICK
+type 27 11 3 0.13
+88     click         0.80   1.00   RUN_CLICK — the hero press of this phase
+88     impact        0.28   1.00   RUN_CLICK: the weight under it
+
+# --- phase 2: the results -----------------------------------------------
+96     pop           0.26   1.00   ROWS_AT: the results panel arrives
+104    tick          0.18   1.00   row 1
+108    tick          0.18   1.04   row 2
+112    tick          0.18   0.97   row 3
+
+# Deliberately silent from here to the filter. The counter counting and the
+# bars growing are motion, not events — scoring them would put a sound on
+# every frame of a second and a half, and nothing would read as an event any
+# more. One hero beat per phase applies to sound too.
+
+# --- phase 3: the filter ------------------------------------------------
+184    click         0.55   1.00   CHIP_CLICK
+190    tick          0.26   1.00   the chip lights, the count re-counts
+
+# --- phase 4: publish ---------------------------------------------------
+274    click         0.80   1.00   PUBLISH_CLICK — hero press
+274    impact        0.28   1.00   PUBLISH_CLICK: weight
+282    pop           0.30   1.00   TOAST_AT: the confirmation lands
+
+# --- out ----------------------------------------------------------------
+380    fold          0.30   1.00   OUT_AT: everything folds back to the ground

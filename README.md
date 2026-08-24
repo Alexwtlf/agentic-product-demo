@@ -36,6 +36,8 @@ see [Troubleshooting](#troubleshooting).
 | `src/compositions/Demo.tsx` | A worked example using every helper. Copy this, change the flow. |
 | `scripts/render.sh` | Sequence render → 1536×960 mp4 + poster → gate. |
 | `scripts/check-frames.mjs` | The frame gate. See below. |
+| `scripts/add-sfx.sh` | Optional sound pass over the finished mp4. |
+| `scripts/beats/` | One beat file per clip — where the sound is scored. |
 | `.claude/skills/product-demo/` | The skill: the playbook an agent reads before touching any of it. |
 
 Cursor users: copy `.claude/skills/product-demo/` to `.cursor/skills/`.
@@ -111,6 +113,24 @@ sh scripts/render.sh myclip 300     # 300 = which frame becomes the poster
 ```
 
 `npm run render` is just this with `demo`. Output lands in `out/`.
+
+### 5. Optionally, score it
+
+```bash
+bash scripts/add-sfx.sh myclip      # out/myclip-sound.mp4
+```
+
+A clip autoplaying in a page **has to stay muted** — browsers block autoplay
+with audio, and a scored file simply will not start. So sound is a second
+output for social, docs and anywhere a viewer taps to play; the silent mp4
+stays the deliverable and is never overwritten.
+
+The pass runs over the already-rendered mp4 and copies the video stream byte
+for byte (`-c:v copy`), so no frame is redrawn and the gate does not need
+re-running. Beats live in `scripts/beats/<id>.txt`, written against the
+beat-sheet constants at the top of your composition. Nine sounds, chosen by
+level of motion rather than by element — the palette and the rules are in
+`scripts/add-sfx.sh` and in the skill.
 
 ### Then make it yours
 

@@ -4,9 +4,9 @@ description: >-
   Shoot, animate and title silent product demo videos with Remotion — for a
   landing page, docs, onboarding, an app store listing or a social post. Use
   when editing anything under src/compositions/, when the user asks for a new
-  demo clip, an intro or an animated title, says a clip feels dead or looks
-  like a screen recording, or reports tiling, flashing or flickering in a
-  rendered video.
+  demo clip, an intro or an animated title, asks for sound or a version for
+  social, says a clip feels dead or looks like a screen recording, or reports
+  tiling, flashing or flickering in a rendered video.
 ---
 
 # Product demo videos
@@ -175,7 +175,78 @@ It renders `--sequence --image-format jpeg --jpeg-quality 90
 
 ---
 
-## 7. Reviewing
+## 7. Sound — ask, once the picture is done
+
+**When the render passes, ask whether they want a sound version.** Once, in
+one line, and only then — sound is a separate pass over the finished mp4, so
+asking earlier just holds up the work.
+
+Ask it as *where the clip is going*, not as "do you want sound":
+
+> The silent clip is done. Autoplaying in a page it has to stay muted —
+> browsers block autoplay with audio. Want me to score a second file for
+> social / docs, where sound plays on tap?
+
+That framing matters. "Do you want sound?" invites yes, and a yes produces a
+file that will not autoplay on the page it was made for. The two outputs are
+not alternatives: **the muted mp4 is the deliverable, the scored one is an
+extra**, and the silent original is never overwritten.
+
+If they say yes:
+
+```bash
+bash scripts/add-sfx.sh <composition-id>     # out/<id>-sound.mp4
+```
+
+Beats live in `scripts/beats/<id>.txt` — copy `demo.txt` and score against
+the beat-sheet constants at the top of the composition. Frames are written in
+**body** coordinates, the same numbers as the constants; the script adds the
+title-card offset.
+
+The pass copies the video stream byte for byte (`-c:v copy`), so no frame is
+redrawn and the gate does not need re-running.
+
+### The palette
+
+Nine sounds, and each one is chosen by the **level of motion** — the `DUR`
+scale in `src/motion.ts` — never by which element it is attached to. Choose by
+element and the vocabulary grows without bound and the clip stops sounding
+like one thing.
+
+| sound | means | level |
+|---|---|---|
+| `key` | a character was typed | — |
+| `click` | the user pressed something | `DUR.press` |
+| `tick` | a state flipped | `DUR.chip` |
+| `pop` | an element arrived | `DUR.panel` |
+| `swipe` | an element travelled | `DUR.sheet` |
+| `whoosh` | **the screen changed, and only that** | phase change |
+| `impact` | weight, a landing | `DUR.hero` |
+| `riser` | waiting, before an event | — |
+| `fold` | everything collapses away | — |
+
+**A single event is always `pitch 1.00`.** Spread of ±6% belongs only inside a
+burst of identical repeats sitting close together — eight documents, seven
+belt rotations, a typing run. The machine-gun effect comes from density, not
+from which sound you picked.
+
+**Score events, not motion.** A counter counting and a bar growing are motion.
+Putting a sound on them means a sound on every frame for a second and a half,
+after which nothing reads as an event. One hero beat per phase applies to
+sound too.
+
+**The defect already made once: `whoosh` on everything.** A whoosh means the
+screen changed. Score an element arrival and a list rotation with it as well
+and the entire clip sounds identical.
+
+The shipped sounds are synthesised by ffmpeg on first run — placeholders, and
+they sound like it. Drop real wavs into `out/sfx/` under the same names and
+every timing still holds; Kenney's UI Audio pack is CC0 and needs no
+attribution.
+
+---
+
+## 8. Reviewing
 
 Remotion has no CSS transitions and `prefers-reduced-motion` is meaningless
 in a rendered file. Everything else the web animation literature says about
