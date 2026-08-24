@@ -127,10 +127,23 @@ sh scripts/render.sh myclip 300     # 300 = which frame becomes the poster
 `npm run render` is just this with `demo`. Output lands in `out/`.
 
 The example runs 480 frames — 16 seconds. **That is a default, not a ceiling.**
-Length should follow your flow: budget roughly 100 frames per simple step and
-240 per movement that has its own beats, add 66 for the title, and set
-`DEMO_LEN` to the total. A three-step flow lands near 14 seconds; a full
-five-movement product story runs past 40. Nothing in the pipeline cares.
+
+Length follows your flow rather than a template. Budget one step, add 66 for
+the title and ~30 for the outro, and set `MYCLIP_LEN` to the total:
+
+| pace | simple step | movement with its own beats |
+| --- | --- | --- |
+| punchy | 70 | 170 |
+| standard | 100 | 240 |
+| cinematic | 140 | 330 |
+
+A three-step flow lands near 14 seconds; a five-movement product story runs
+past 40. Nothing in the pipeline cares which you pick — the render, the gate
+and the sound pass all read the length off the composition.
+
+Working with an agent, you do not do this arithmetic: it derives the number
+from the flow you described and shows its working, so you can answer "punchy"
+in one word instead of counting frames.
 
 ### 5. Optionally, score it
 

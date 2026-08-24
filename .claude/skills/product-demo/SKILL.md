@@ -59,16 +59,35 @@ user has already shown they care.
 
 - **Title text.** Defaults to the headline of the section the clip sits in,
   with a kicker drawn from its body copy. 2.2s.
-- **Length.** Derive it from the flow, never default to it. Budget ~100
-  frames for a simple step (a click, a panel arriving) and ~240 for a
-  movement that has its own internal beats (a list assembling, a belt
-  rotating), then add 66 for the title and ~30 for the outro. Three steps
-  lands near 14s, five near 21s, five movements near 42s. Say the number and
-  the arithmetic in one line.
-  *Ask only if it comes out past ~45s* — beyond that it stops being a loop
-  for a page section and becomes a launch film, which is a different brief
-  and worth confirming before you shoot it. Clips that sit in the same row
-  should share a rhythm, so match a sibling if there is one.
+- **Length.** Derive it from the flow, never default to it. Budget one step
+  at the pace below, add 66 for the title and ~30 for the outro, and set
+  `<CLIP>_LEN` to the total.
+
+  | pace | simple step | movement with its own beats |
+  | --- | --- | --- |
+  | punchy | 70 | 170 |
+  | **standard** (default) | **100** | **240** |
+  | cinematic | 140 | 330 |
+
+  A *simple step* is one action and its answer — a click, a panel arriving.
+  A *movement* has internal beats: a list assembling row by row, a belt
+  rotating through seven formats.
+
+  **Show the arithmetic, don't just announce a number.** A number with no
+  derivation reads as arbitrary and the user has nothing to push against:
+
+  > Four steps and a reveal, standard pace: 66 + 4×100 + 240 + 30 = 736
+  > frames, 24.5s. Say "punchy" for ~18s or "cinematic" for ~32s.
+
+  That line is the whole interaction. **Do not ask which pace they want** —
+  pace is taste with no right answer, and offered as a question it gets
+  answered "fast", which is how a demo ends up rushing the steps it exists
+  to show. State the default, name the alternatives, move on.
+
+  *Do ask if the total comes out past ~45s.* Beyond that it stops being a
+  loop for a page section and becomes a launch film — a different brief,
+  worth confirming before you shoot it. And clips sharing a row should share
+  a rhythm, so match a sibling if there is one.
 - **Where the delight budget goes.** One hero beat per phase. Name which
   element the phase is about and spend it there.
 
