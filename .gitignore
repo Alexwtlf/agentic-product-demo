@@ -3,3 +3,7 @@ out
 .cache
 .DS_Store
 public/payoff
+
+# clips shot against a real product — keep them local, they need assets
+# that do not belong in this repo
+src/compositions/Athana.tsx

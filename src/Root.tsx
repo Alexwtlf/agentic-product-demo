@@ -1,7 +1,6 @@
 import { AbsoluteFill, Composition, Sequence, useCurrentFrame } from "remotion";
 import "./theme.css";
 import { Demo, DEMO_LEN } from "./compositions/Demo";
-import { Athana, ATHANA_LEN } from "./compositions/Athana";
 import { TITLE_LEN, TitleCard } from "./title-card";
 
 export const FPS = 30;
@@ -53,35 +52,19 @@ function Clip({
 
 export function RemotionRoot() {
   return (
-    <>
-      <Composition
-        id="demo"
-        component={() => (
-          <Clip
-            body={<Demo />}
-            name="Acme Studio"
-            kicker="Ask a question, publish the answer"
-          />
-        )}
-        durationInFrames={DEMO_LEN + TITLE_LEN}
-        fps={FPS}
-        width={WIDTH}
-        height={HEIGHT}
-      />
-      <Composition
-        id="athana"
-        component={() => (
-          <Clip
-            body={<Athana />}
-            name="Athana"
-            kicker="Make any video you can imagine."
-          />
-        )}
-        durationInFrames={ATHANA_LEN + TITLE_LEN}
-        fps={FPS}
-        width={WIDTH}
-        height={HEIGHT}
-      />
-    </>
+    <Composition
+      id="demo"
+      component={() => (
+        <Clip
+          body={<Demo />}
+          name="Acme Studio"
+          kicker="Ask a question, publish the answer"
+        />
+      )}
+      durationInFrames={DEMO_LEN + TITLE_LEN}
+      fps={FPS}
+      width={WIDTH}
+      height={HEIGHT}
+    />
   );
 }
