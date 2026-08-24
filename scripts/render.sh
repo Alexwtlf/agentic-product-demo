@@ -46,8 +46,18 @@ npx remotion render "$ID" "$FRAMES" --sequence \
 # 1536x960 is the same 8:5 as the 1600x1000 canvas and is 16-aligned, so no
 # partial macroblock row. -bf 0 is here only so frame-stepping in a scrubber
 # lands on what the composition drew; it is not a fix for tiling.
+# Remotion pads the sequence to fit the frame count: three digits under a
+# thousand frames, four above. Hardcoding %03d works until the first clip
+# that runs past 33 seconds, then ffmpeg reports "could find no file" and
+# the render you just waited eight minutes for is gone. Read the width off
+# the first file instead.
+FIRST=$(ls "$FRAMES" | head -1)
+NUM=${FIRST#element-}
+NUM=${NUM%.jpeg}
+PAD=${#NUM}
+
 "$FFMPEG" -y -framerate 30 -start_number 0 \
-  -i "$FRAMES/element-%03d.jpeg" \
+  -i "$FRAMES/element-%0${PAD}d.jpeg" \
   -vf "scale=${DELIVER}:flags=lanczos,format=yuv420p" \
   -c:v libx264 -profile:v high -level 4.0 \
   -pix_fmt yuv420p -crf 21 \
@@ -57,7 +67,7 @@ npx remotion render "$ID" "$FRAMES" --sequence \
 
 # The poster is a real frame of the clip, not a separate render — so the
 # first painted pixel of the <video> is exactly what frame N looks like.
-PADDED=$(printf "%03d" "$POSTER_FRAME")
+PADDED=$(printf "%0${PAD}d" "$POSTER_FRAME")
 cp "$FRAMES/element-$PADDED.jpeg" "$OUT/$ID-poster.jpg"
 
 rm -rf "$FRAMES"

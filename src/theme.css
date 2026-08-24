@@ -11,22 +11,21 @@
  * that seam and fails the render if it strobes. */
 
 :root {
-  /* Athana dark tokens, lifted from src/app/globals.css .dark */
-  --background: oklch(0.1288 0.0406 264.6952);
-  --foreground: oklch(0.9842 0.0034 247.8575);
-  --card: oklch(0.2077 0.0398 265.7549);
-  --muted: oklch(0.2795 0.0368 260.031);
-  --muted-foreground: oklch(0.7107 0.0351 256.7878);
-  --border: oklch(0.2795 0.0368 260.031);
+  /* app surfaces */
+  --background: oklch(0.145 0.02 265);
+  --foreground: oklch(0.985 0.003 248);
+  --card: oklch(0.205 0.025 265);
+  --muted: oklch(0.28 0.028 260);
+  --muted-foreground: oklch(0.72 0.03 257);
+  --border: oklch(0.3 0.03 260);
 
-  /* Lime is the Create button. One accent. */
-  --brand: oklch(0.8871 0.2122 128.5041);
-  --brand-soft: oklch(0.3925 0.0896 152.5353);
-  --brand-strong: oklch(0.8871 0.2122 128.5041);
-  --brand-ink: oklch(0 0 0);
+  /* the one accent. One per frame — see titles.md. */
+  --brand: oklch(0.68 0.19 265);
+  --brand-soft: oklch(0.32 0.08 265);
+  --brand-strong: oklch(0.82 0.14 265);
 
-  /* Close in luminance to --background so the loop seam is free. */
-  --ground: oklch(0.12 0.04 265);
+  /* the dark ground the clip opens, closes and loops on */
+  --ground: oklch(0.115 0.025 268);
 
   --radius: 14px;
 }
