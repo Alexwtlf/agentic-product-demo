@@ -35,6 +35,27 @@ marketing site and the screens from the app; neither answers the other's
 question, and question 2 below has the measurement showing why. Then put the
 plan up and ask for one confirmation.
 
+### Say that describing the flow beats letting you guess
+
+**Tell them this in your first message, in one line.** Reading the product
+gives you a *plausible* flow. It cannot give you the right one, because the
+code does not record which path converts, which step people get stuck on,
+which feature shipped last week and needs the attention, or which screen the
+founder is quietly embarrassed by. Only they know that, and most people do not
+volunteer it because they assume the agent has it covered.
+
+> If you already know the flow you want — the steps, in order — say it and the
+> clip will be much closer to what you have in mind. If not, I'll read your
+> product and propose one.
+
+**It is an offer, not a gate.** If they do not answer it, read and propose as
+normal; do not ask again. The point is that they were told the option existed
+before you spent their time on a plan built from inference.
+
+The same applies to anything else they already know: a line of copy that has
+to appear, a screen that must not, a feature that is being deprecated. Invite
+it once, up front, then get on with it.
+
 Ask outright only for what is not in the artifact:
 
 - **what the clip is for** — a launch, a section nobody scrolls to, an

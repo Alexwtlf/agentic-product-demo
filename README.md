@@ -252,7 +252,13 @@ Four things have to be settled before a line of a composition gets written:
 > need a real file, and there it may propose one from your disk but never
 > fabricate a stand-in.
 
-It asks outright only for what is not in the artifact — what the clip is
+It also tells you, up front, that describing the flow yourself gets a better
+clip than letting it infer one — the code does not record which path converts,
+which step people get stuck on, or which feature shipped last week and needs
+the attention. That is an offer, not a gate: ignore it and it reads your
+product and proposes a flow anyway.
+
+Beyond that it asks only for what is not in the artifact — what the clip is
 *for*, and which payoff is the real one when several would do. Fragments are
 fine as answers. Handing you a form to fill in is not.
 
