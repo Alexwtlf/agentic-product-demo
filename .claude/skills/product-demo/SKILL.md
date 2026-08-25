@@ -414,16 +414,29 @@ It renders `--sequence --image-format jpeg --jpeg-quality 90
 one line, and only then — sound is a separate pass over the finished mp4, so
 asking earlier just holds up the work.
 
-Ask it as *where the clip is going*, not as "do you want sound":
+**Which question you ask depends on where the clip lives** (question zero).
+
+*A clip for a page section.* Ask it as where it is going, never as "do you
+want sound":
 
 > The silent clip is done. Autoplaying in a page it has to stay muted —
 > browsers block autoplay with audio. Want me to score a second file for
 > social / docs, where sound plays on tap?
 
-That framing matters. "Do you want sound?" invites yes, and a yes produces a
-file that will not autoplay on the page it was made for. The two outputs are
-not alternatives: **the muted mp4 is the deliverable, the scored one is an
-extra**, and the silent original is never overwritten.
+That framing matters here. "Do you want sound?" invites yes, and a yes
+produces a file that will not autoplay on the page it was made for. The two
+outputs are not alternatives: the muted mp4 is the deliverable, the scored one
+is an extra.
+
+*A standalone clip.* The opposite. Nobody autoplays it, so there is no muting
+constraint and the scored file is the one that ships — a launch video posted
+silent looks unfinished. Ask plainly, and expect yes:
+
+> Picture is done. Want me to score it? Roughly 30 beats — clicks, panels
+> landing, one whoosh per screen change. It runs over the finished file, so
+> the picture cannot change.
+
+Either way the silent original is never overwritten.
 
 If they say yes:
 
