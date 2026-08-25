@@ -320,11 +320,21 @@ recommend [`--concurrency=1`](https://www.remotion.dev/docs/flickering) for
 flickering and the render script always passes it — but a flag you have to
 remember is not a guarantee.
 
-**Known blind spot:** frames that are nearly one flat colour have matching
-halves by definition, so only frames with real contrast are judged
-(`FLAT = 120`). On a pale, low-contrast UI the detector will miss corruption a
-dark one would catch. Lower the threshold for a light product; never raise it
-to make a failure go away.
+**Two known blind spots.** Both come from the same heuristic: the tile check
+asks whether a frame's left half resembles its right half, which is anomalous
+in a dense interface and perfectly normal elsewhere.
+
+*Flat frames.* Nearly one colour means matching halves by definition, so only
+frames with real contrast are judged (`FLAT = 120`). On a pale, low-contrast
+UI it will miss corruption a dark one would catch. Lower the threshold for a
+light product; never raise it to make a failure go away.
+
+*Repeating or symmetric content.* A grid background, a striped field, a
+centred layout — the halves match because the design says so. Measured
+against a motion-graphics render on a grid template, this produced nine false
+positives out of three hundred frames, every one of them a frame where the
+foreground text had left and only the grid remained. **This detector is built
+for product UI.** On graphic content, read every flag before believing it.
 
 ---
 
