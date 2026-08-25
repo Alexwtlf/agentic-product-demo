@@ -77,3 +77,13 @@ ls -lh "$OUT"
 # is not a clip you ship and fix later, because you will not see it again
 # until someone else does.
 node scripts/check-frames.mjs "$OUT/$ID.mp4"
+
+# The gate passed, so the picture is finished — which is the moment the skill
+# says to ask about sound, and the moment it is easiest to skip because the
+# render just succeeded and there is a file to go and show. A line in a
+# document does not survive that; a line in the output the agent has to read
+# anyway does.
+echo
+echo "Picture is done. Sound is a separate pass over this file:"
+echo "  bash scripts/add-sfx.sh $ID          # writes $OUT/$ID-sound.mp4"
+echo "Ask before scoring it — see section 7 of the skill for which question."
