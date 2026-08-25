@@ -315,7 +315,10 @@ luminance jumps over 25: none
 loop seam: frame 479 Y=20.0 -> frame 0 Y=20.0   jump 0.0
 ```
 
-`scripts/render.sh` exits non-zero on a failure. Remotion's docs also
+`scripts/render.sh` exits non-zero on a failure. For a clip that plays once
+rather than looping, pass `STANDALONE=1` — the seam check only means something
+for a clip that cuts back to its first frame, and without the flag the gate
+fails a launch video for ending somewhere brighter than it started. Remotion's docs also
 recommend [`--concurrency=1`](https://www.remotion.dev/docs/flickering) for
 flickering and the render script always passes it — but a flag you have to
 remember is not a guarantee.

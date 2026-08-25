@@ -20,6 +20,11 @@ POSTER_FRAME="${2:-300}"
 # Root.tsx, never on its own.
 DELIVER="${DELIVER:-1536:960}"
 
+# STANDALONE=1 for a clip that plays once — skips the loop-seam check, which
+# only means something for a clip that repeats in a page.
+GATE_FLAGS=""
+[ "${STANDALONE:-0}" = "1" ] && GATE_FLAGS="--standalone"
+
 OUT="out"
 FRAMES="$OUT/$ID-frames"
 
@@ -76,7 +81,7 @@ ls -lh "$OUT"
 # The gate. Non-zero exit fails the render on purpose: a clip that flickers
 # is not a clip you ship and fix later, because you will not see it again
 # until someone else does.
-node scripts/check-frames.mjs "$OUT/$ID.mp4"
+node scripts/check-frames.mjs "$OUT/$ID.mp4" $GATE_FLAGS
 
 # The gate passed, so the picture is finished — which is the moment the skill
 # says to ask about sound, and the moment it is easiest to skip because the

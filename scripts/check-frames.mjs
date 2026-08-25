@@ -28,9 +28,16 @@ const LOCAL = new URL("../node_modules/ffmpeg-static/ffmpeg", import.meta.url)
   .pathname;
 const FFMPEG = existsSync(LOCAL) ? LOCAL : "ffmpeg";
 
-const file = process.argv[2];
+const args = process.argv.slice(2);
+/* A standalone clip is watched once, so the last frame never cuts back to the
+ * first and the seam is not a defect — it is just where the film ended. Only a
+ * clip that loops in a page has to close the circle. The skill splits these
+ * two cases; without this flag the gate did not, and failed a launch video for
+ * ending somewhere brighter than it started. */
+const standalone = args.includes("--standalone");
+const file = args.find((a) => !a.startsWith("--"));
 if (!file) {
-  console.error("usage: node scripts/check-frames.mjs <video>");
+  console.error("usage: node scripts/check-frames.mjs <video> [--standalone]");
   process.exit(2);
 }
 
@@ -144,12 +151,18 @@ for (const t of tiled)
 console.log(`\nluminance jumps over ${LUMA_JUMP}: ${jumps.length ? "" : "none"}`);
 for (const j of jumps)
   console.log(`  frame ${j.from} -> ${j.to}   jump ${j.jump}`);
-console.log(
-  `\nloop seam: frame ${luma.length - 1} Y=${luma[luma.length - 1].toFixed(1)} -> frame 0 ` +
-    `Y=${luma[0].toFixed(1)}   jump ${seam.toFixed(1)}${
-      seam > LUMA_JUMP ? "  <-- flashes on every loop" : ""
-    }`,
-);
+if (standalone) {
+  console.log(
+    `\nloop seam: not checked (--standalone) — last frame Y=${luma[luma.length - 1].toFixed(1)}, first Y=${luma[0].toFixed(1)}`,
+  );
+} else {
+  console.log(
+    `\nloop seam: frame ${luma.length - 1} Y=${luma[luma.length - 1].toFixed(1)} -> frame 0 ` +
+      `Y=${luma[0].toFixed(1)}   jump ${seam.toFixed(1)}${
+        seam > LUMA_JUMP ? "  <-- flashes on every loop" : ""
+      }`,
+  );
+}
 
-const bad = tiled.length || jumps.length || seam > LUMA_JUMP;
+const bad = tiled.length || jumps.length || (!standalone && seam > LUMA_JUMP);
 process.exit(bad ? 1 : 0);
