@@ -11,3 +11,4 @@ src/compositions/Athana.tsx
 # assets for the Athana clip — not ours to publish
 public/athana
 src/compositions/AthanaLaunch.tsx
+scripts/beats/athana-launch.txt
