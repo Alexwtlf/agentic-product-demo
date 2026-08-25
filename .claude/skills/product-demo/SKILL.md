@@ -278,6 +278,11 @@ vocabulary and rationale: `references/motion.md`. The rules:
    tween without reflowing the row every frame.
 8. **One hero beat per phase.** If everything is animated, nothing reads as
    animated.
+9. **Lay out to the bottom of the canvas.** Panels sized by habit rather than
+   by the frame leave a quarter of the picture empty, and dead space at the
+   bottom of a shot reads as a mistake rather than as restraint. Work out
+   where content has to end — canvas height minus a margin — and size the
+   panels to reach it. At 1600×900 with a 108px header that is about 852.
 
 Everything comes from `src/motion.ts`. If a curve or duration is missing,
 add it there so every clip inherits it — never hand-roll one in a
@@ -332,6 +337,32 @@ understood. Debugging guide: `references/render.md`.
    is a brighter flash than the cut.
 6. **Restart a push at the source's own cut.** Find cuts with
    `ffmpeg -vf "select='gt(scene,0.25)'"`.
+
+   ---
+
+   **Rule 5 has a trap, and knowing the rule does not avoid it.** Written as
+   above it sounds like advice about easing. It is not: it is about what is
+   underneath.
+
+   The construction you will reach for is to fade the outgoing phase out
+   while fading the incoming one in. At the midpoint both sit near 50%, the
+   ground shows through both, and the seam reads as a dip. Instead, leave the
+   outgoing at full opacity and bring the incoming in **over** it.
+
+   Then the part that is easy to miss even after doing that: **the incoming
+   phase must actually be opaque.** A phase that draws panels on a
+   transparent root is a sheet with holes in it — the old phase shows through
+   the gaps, and the frame the old one unmounts on drops all of its panels at
+   once. That is a full-frame luminance jump, `check-frames.mjs` fails the
+   render, and no amount of easing hides it. Give every phase root its own
+   `background`.
+
+   And keep the last phase mounted through whatever follows it. If the film
+   holds on a finished state after the flow ends, the phase that drew that
+   state has to still be alive, or the hold is an empty screen.
+
+   *All three of these were shipped, in that order, by an agent that had read
+   rule 5 first.*
 7. **One still per timeline frame.** Never hold 24fps footage as
    every-other-frame in a 30fps comp. Extract 1:1.
 8. **Bump the cache-buster on both `src` and `poster`** when you replace a
