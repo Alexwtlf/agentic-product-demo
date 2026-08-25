@@ -53,9 +53,14 @@ see [Troubleshooting](#troubleshooting).
 | `scripts/add-sfx.sh` | Optional sound pass over the finished mp4. |
 | `scripts/beats/` | One beat file per clip — where the sound is scored. |
 | `.claude/skills/product-demo/` | The skill: the playbook an agent reads before touching any of it. |
+| `AGENTS.md` | What an agent needs on arrival — commands, and the rules it would otherwise break. |
 
-Cursor users: copy `.claude/skills/product-demo/` to `.cursor/skills/`.
-Everything else is the same file.
+`AGENTS.md` at the root is read natively by Claude Code, Codex, Cursor, Aider,
+Copilot, Gemini CLI and Windsurf — an agent opening this folder is oriented
+before you say anything. `CLAUDE.md` points at it rather than repeating it.
+
+Cursor users who want the skill loaded as a skill: copy
+`.claude/skills/product-demo/` to `.cursor/skills/`. Same file either way.
 
 ---
 
