@@ -3,44 +3,17 @@
 **Point your coding agent at your product and get a demo video back — built in
 React, not recorded off a screen.**
 
-An agent skill and a Remotion project for product demo videos — the clips that
-show what your software actually does. A muted loop for a landing section, or a
-launch video that plays once for a post, a doc, an app store listing or a deck.
-
-They are not the same film, and the agent settles which one before it starts: a
-page clip autoplays, so it loops and reads with the sound off, while a launch
-video plays because someone pressed play. [Sound](#6-optionally-score-it) is a
-second pass over the finished file either way.
-
-Works with Claude Code, Cursor, or anything else that loads a skill file. What
-the agent does is real but not magic — it interviews you about the flow, writes
-the composition, renders it and checks the result. You still settle four
-things — mostly by correcting a plan it puts up rather than by answering
-questions. [What that looks like](#working-with-an-agent).
-
-![A product demo rendered with this pipeline](docs/preview.gif)
-
-*Ten seconds out of a 42-second demo, made with this pipeline for
-[Athana](https://athana.ai) — five movements, one flow, no screen recorder. It
-needs that product's own assets, so it is not the composition that ships here.*
-
-**This is** — the whole of it, nothing cut:
+The hard part is not making a video. It is making one that does not look like
+a screen recording. This repo is the motion vocabulary, the render pipeline and
+the frame gate that got mine there, plus the skill file that makes an agent
+follow them instead of improvising.
 
 ![The example composition rendered end to end](docs/demo.gif)
 
-*`src/compositions/Demo.tsx`, sixteen seconds, exactly what `npm run render`
-gives you on a fresh clone. Watch what does **not** happen: no state snaps
-between frames. The field takes focus and gives it back, the query types, five
-rows stagger in rather than appearing together, the counter counts instead of
-jumping, the filter dims what it excludes and the total recounts, and the
-pointer stops on each thing before it presses it. That is the entire argument —
-a screen recording of a real app would show every one of those as a teleport.
-Generic on purpose: it is the file you copy and point at your own flow.*
-
-The hard part is not making a video. It is making one that does not look like
-a screen recording. This repo is the motion vocabulary, the render pipeline
-and the frame gate that got mine there, plus the skill file that makes an AI
-agent follow them instead of improvising.
+*`src/compositions/Demo.tsx` — sixteen seconds, exactly what `npm run render`
+gives you on a fresh clone. Nothing on screen snaps between frames: the counter
+counts, the rows stagger, the pointer stops before it presses. A screen
+recording of a real app shows every one of those as a teleport.*
 
 ```bash
 npm install
@@ -51,6 +24,17 @@ npm run render     # renders, stitches, and gates the result
 
 Node 20+. First render downloads a headless Chromium (~100 MB); if that fails
 see [Troubleshooting](#troubleshooting).
+
+Works with Claude Code, Cursor, or anything else that loads a skill file. It
+reads your product, puts up a shot list, and waits for you to correct it —
+[what that looks like](#working-with-an-agent). Then it writes the composition,
+renders it, and refuses to pass a render it cannot verify.
+
+![A product demo rendered with this pipeline](docs/preview.gif)
+
+*The same pipeline, cut for [Athana](https://athana.ai) — five movements, one
+flow, no screen recorder. It runs on that product's own assets, which is why
+the composition that ships here is the generic one above.*
 
 ---
 
