@@ -113,6 +113,11 @@ one you assumed. **What you must not do is assume silently**: a launch film
 built as a page loop comes out short, silent and ending exactly where it
 started, and nobody names the cause — they just say it feels slight.
 
+*"Say it, don't ask it" is about the shape of the exchange, not about hiding
+the choice.* Offering it as a pre-selected option with the consequence spelled
+out is saying it — see "Put it up as one block" below. What is banned is the
+open question with no default, which makes them do your work.
+
 **1. What is being made on screen?** One sentence. Not the product feature —
 the thing the viewer watches get built. "A revenue report", "a UGC ad for a
 supplement brand", "a deploy going out".
@@ -176,6 +181,53 @@ the one thing a viewer is actually judging: output quality.
 scene" that ends on a different person destroys its own claim in the last
 four seconds, and no edit repairs it. If the payoff is generated media, check
 that the thing in the ending is the thing from the flow before you shoot.*
+
+### Put it up as one block, not as an interview
+
+Everything above is *what* has to be settled. This is *how* to put it, and the
+form matters as much as the content: three prose questions in a row read as an
+interrogation, and people answer interrogations badly.
+
+**If the harness has a structured question tool — Claude Code's
+`AskUserQuestion` — use it.** One block, three questions, each option carrying
+a one-line consequence, and **your own inference marked `(Recommended)` and
+listed first**. Everywhere else in this section says *state your assumption and
+let them correct it with a word*; a pre-selected recommendation is that, done
+properly. It is not an interview — it is your plan, pre-filled, one click from
+being corrected.
+
+Without such a tool, ask the same three in **one message**, marking which
+answer you would take if they say nothing.
+
+**The three, and nothing else:**
+
+| header | question | options |
+| --- | --- | --- |
+| `Scope` | A demo of the whole product, or a scene about one feature? | **Whole product** — 3–5 features as movements on a through-line; they leave knowing what it *is*. · **One feature** — one flow start to finish; they leave knowing how to do one thing. |
+| `Where` | Where does it live? Sets the loop seam, the sound and the length ceiling. | **In a page section** — autoplays, so muted and seamless; 8:5 tile, 14–25s for a feature, 35–60s for a tour. · **Standalone** — plays once, sound is real, up to 90s, may end on a card. |
+| `Flow` | Do you already know the steps you want walked? | **No, read my product and propose** — running order from the site, screens from the app. · **Yes, I'll describe them** — fragments are fine: "dashboard, they filter it, end on the published report". |
+
+Mark the recommendation on `Where` from the answer you expect on `Scope` — a
+tour is nearly always standalone, a feature clip nearly always a page loop.
+Both crossings are real, which is exactly why it is offered rather than
+assumed silently.
+
+`Flow` is the §1 invitation in a form people actually answer. Recommend "read
+my product" — that is the honest default — but the option to describe it has
+to be visible, because the code cannot tell you which path converts or which
+screen the founder is embarrassed by.
+
+**Never put length or pace in that block.** Both get answered "short" and
+"fast" on reflex, and a demo that rushes the steps it exists to show is the
+result. Derive the number, show the arithmetic, name the alternatives — the
+section below is how.
+
+**A fourth question only when the ending is media the product generates and
+the disk offers several files with nothing to choose between them.** Options
+are the real filenames. Never a generated stand-in.
+
+Do not add a question for the title, the pace, the palette or the delight
+budget. Those are yours to decide and to say in passing.
 
 ### The three with defaults — state your choice, don't ask
 
@@ -304,6 +356,25 @@ vocabulary and rationale: `references/motion.md`. The rules:
    bottom of a shot reads as a mistake rather than as restraint. Work out
    where content has to end — canvas height minus a margin — and size the
    panels to reach it. At 1600×900 with a 108px header that is about 852.
+10. **The pointer must land on what it presses, and stop there.** Two
+    separate failures, and both have shipped.
+
+    *The coordinate.* Take every target from a rendered frame, never from
+    reading the CSS. Estimating a chip's centre off padding and font size put
+    the cursor 94px away, on the counter above it — and nothing downstream
+    noticed, because the press fires, the state changes and the frame is
+    clean. §6 is how you catch it.
+
+    *The hold.* `trackPos` eases from one key straight into the next, so a
+    target with a single key starts leaving the frame it arrives on. The
+    click beat lands ~20 frames later, by which time the pointer has drifted
+    toward its next target — 21px onto the bottom edge of the chip, which
+    reads as the cursor missing what it just pressed. **Give every target two
+    keys**, the second at `CLICK + 8`, outlasting `press()`. A real pointer
+    stops, presses, and only then goes. The drift scales with the distance to
+    the next target, so the worst miss is always the beat before the longest
+    move — and a target that happens to be followed by a key at the same
+    coordinates hides the bug completely, which is why it went unnoticed.
 
 Everything comes from `src/motion.ts`. If a curve or duration is missing,
 add it there so every clip inherits it — never hand-roll one in a
@@ -391,7 +462,37 @@ understood. Debugging guide: `references/render.md`.
 
 ---
 
-## 6. Render and gate
+## 6. Preview, render, gate
+
+### Look at it before you render it
+
+```bash
+sh scripts/preview.sh <composition-id>
+```
+
+**Do this before every full render, and read the contact sheet it writes.**
+It shoots a still on each beat and again 12 frames later, reading the beat
+sheet straight out of the composition. Seconds, against minutes for a render
+that hard rule 1 pins to `--concurrency=1`.
+
+This is not the gate and does not overlap with it. `check-frames.mjs` measures
+two numbers per frame — half-against-half similarity, and average luminance.
+A panel over the header, a phase drawn empty, a counter cut off before it
+lands, a pointer pressing the number above the button: none of those move
+either quantity. **The gate passes and the clip is still wrong.** Every defect
+in that list has shipped from this repo, each one found by rendering a frame
+and looking at it.
+
+What to look for, in order: the pointer on the thing it presses (rule 10),
+every panel inside the frame and clear of the chrome, no phase drawn empty,
+nothing cut off at a panel edge, and the bottom of the canvas doing work
+(rule 9).
+
+What it cannot see is **time**. A stack of stills says nothing about a rhythm
+that drags, a beat that lands early, or a hold that outstays its welcome.
+Those only exist in motion, so the finished mp4 still gets watched.
+
+### Render and gate
 
 ```bash
 sh scripts/render.sh <composition-id> [poster-frame]
@@ -403,6 +504,11 @@ It renders `--sequence --image-format jpeg --jpeg-quality 90
 
 `check-frames.mjs` is the regression test for hard rules 1 and 5. Do not
 "fix" a fail by loosening the detector.
+
+On a failure the frame sequence is **kept**, and the script prints the path.
+That is the point of rendering through stills: open the flagged JPEG and see
+whether the grid is already in it, which is what decides whether the encoder
+is innocent. `references/render.md` has the order.
 
 **Back up the previous mp4 and poster before re-rendering over them.**
 

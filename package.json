@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio",
+    "preview": "sh scripts/preview.sh demo",
     "render": "sh scripts/render.sh demo",
     "check": "node scripts/check-frames.mjs out/demo.mp4"
   },

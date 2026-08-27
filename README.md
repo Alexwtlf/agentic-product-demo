@@ -9,12 +9,13 @@ launch video that plays once for a post, a doc, an app store listing or a deck.
 
 They are not the same film, and the agent settles which one before it starts: a
 page clip autoplays, so it loops and reads with the sound off, while a launch
-video plays because someone pressed play. [Sound](#5-optionally-score-it) is a
+video plays because someone pressed play. [Sound](#6-optionally-score-it) is a
 second pass over the finished file either way.
 
 Works with Claude Code, Cursor, or anything else that loads a skill file. What
 the agent does is real but not magic — it interviews you about the flow, writes
-the composition, renders it and checks the result. You still answer three
+the composition, renders it and checks the result. You still settle four
+things — mostly by correcting a plan it puts up rather than by answering
 questions. [What that looks like](#working-with-an-agent).
 
 ![A product demo rendered with this pipeline](docs/preview.gif)
@@ -32,6 +33,7 @@ agent follow them instead of improvising.
 ```bash
 npm install
 npm run studio     # preview at localhost:3000
+npm run preview    # stills on every beat + a contact sheet — seconds
 npm run render     # renders, stitches, and gates the result
 ```
 
@@ -47,7 +49,8 @@ see [Troubleshooting](#troubleshooting).
 | `src/motion.ts` | The vocabulary. Curves, durations, stagger, and the helpers that stop states teleporting. Imports nothing. |
 | `src/title-card.tsx` | The cold open — words rising out of per-word masks. |
 | `src/chrome.tsx` | The fake app window, the pointer, the click beats. |
-| `src/compositions/Demo.tsx` | A worked example using every helper. Copy this, change the flow. |
+| `src/compositions/Demo.tsx` | A worked example. Copy this, change the flow. |
+| `scripts/preview.sh` | Stills on every beat, plus a contact sheet. What the gate cannot see. |
 | `scripts/render.sh` | Sequence render → 1536×960 mp4 + poster → gate. |
 | `scripts/check-frames.mjs` | The frame gate. See below. |
 | `scripts/add-sfx.sh` | Optional sound pass over the finished mp4. |
@@ -125,10 +128,29 @@ npm run studio          # localhost:3000, pick "myclip", scrub the timeline
 Scrubbing is where the work happens. Jump to a beat, look at it, adjust the
 constant, look again.
 
-### 4. Render it
+### 4. Look at it
 
 ```bash
-sh scripts/render.sh myclip 300     # 300 = which frame becomes the poster
+sh scripts/preview.sh myclip
+```
+
+Reads the beat sheet out of your composition and shoots a still on each beat
+and again twelve frames later, then tiles them into
+`out/myclip-preview/contact.jpg`. Seconds, where a render is minutes.
+
+Do this before every render. The gate that runs afterwards measures two
+numbers per frame and cannot see whether the picture is *right* — a panel over
+the header, a phase drawn empty, a pointer pressing the number above the
+button all sail through it. Looking is the only thing that catches those, and
+this makes looking cheap.
+
+It cannot see time, though. Rhythm only exists in motion, so watch the mp4
+when it comes out.
+
+### 5. Render it
+
+```bash
+sh scripts/render.sh myclip 366     # 366 = which frame becomes the poster
 ```
 
 `npm run render` is just this with `demo`. Output lands in `out/`.
@@ -152,7 +174,7 @@ Working with an agent, you do not do this arithmetic: it derives the number
 from the flow you described and shows its working, so you can answer "punchy"
 in one word instead of counting frames.
 
-### 5. Optionally, score it
+### 6. Optionally, score it
 
 ```bash
 bash scripts/add-sfx.sh myclip      # out/myclip-sound.mp4
@@ -187,7 +209,7 @@ level of motion rather than by element — the palette and the rules are in
 
 ---
 
-## The eight motion rules
+## The nine motion rules
 
 These are the difference between a clip that reads as software and one that
 reads as a screenshot slideshow. Long form in
@@ -209,6 +231,12 @@ reads as a screenshot slideshow. Long form in
    every frame.
 8. **One hero beat per phase.** If everything is animated, nothing reads as
    animated.
+9. **The pointer lands on what it presses, and stops there.** Take the
+   coordinate off a rendered frame, never off the CSS — estimating a chip's
+   centre from padding and font size put the cursor 94px away, on the counter
+   above it. Then give every target *two* keys, the second outlasting the
+   press: with one key the pointer starts easing toward its next target the
+   frame it arrives, and the click fires 20 frames into that move.
 
 And the one that is not about motion: **never put a lasting `transform` on
 the container that holds the whole UI.** A scale on the app frame resamples
@@ -267,6 +295,16 @@ Beyond that it asks only for what is not in the artifact — what the clip is
 *for*, and which payoff is the real one when several would do. Fragments are
 fine as answers. Handing you a form to fill in is not.
 
+It comes as **one block of three questions**, not an interview: scope, where
+the clip lives, and whether you already know the steps. Each option says what
+it costs you, and the agent's own guess is pre-selected — so the usual answer
+is one click, and correcting it is one click too. In Claude Code that is a
+native picker; elsewhere it is the same three in a single message.
+
+**Length is deliberately not among them.** Asked, it gets answered "short" on
+reflex, and a demo that rushes the steps it exists to show is the result. The
+agent derives it from your flow and shows the arithmetic instead.
+
 ### Then it shows you the shot list, and waits.
 
 > ```
@@ -320,13 +358,24 @@ luminance jumps over 25: none
 loop seam: frame 479 Y=20.0 -> frame 0 Y=20.0   jump 0.0
 ```
 
-`scripts/render.sh` exits non-zero on a failure. For a clip that plays once
-rather than looping, pass `STANDALONE=1` — the seam check only means something
-for a clip that cuts back to its first frame, and without the flag the gate
-fails a launch video for ending somewhere brighter than it started. Remotion's docs also
-recommend [`--concurrency=1`](https://www.remotion.dev/docs/flickering) for
-flickering and the render script always passes it — but a flag you have to
-remember is not a guarantee.
+**What it does not check is the picture.** Two numbers per frame — half
+against half, and average luminance — is the whole of it. A panel over the
+header, a phase drawn empty, a counter cut off, a pointer pressing the wrong
+element: every one of those passes. That is what `scripts/preview.sh` is for,
+and why it runs *before* this, not instead of it.
+
+`scripts/render.sh` exits non-zero on a failure, and **keeps the frame
+sequence when it fails**, printing the path. The flagged JPEG is what decides
+whether the encoder is innocent, and being able to open it is the only reason
+to render through stills at all.
+
+For a clip that plays once rather than looping, pass `STANDALONE=1` — the seam
+check only means something for a clip that cuts back to its first frame, and
+without the flag the gate fails a launch video for ending somewhere brighter
+than it started. Remotion's docs also recommend
+[`--concurrency=1`](https://www.remotion.dev/docs/flickering) for flickering
+and the render script always passes it — but a flag you have to remember is
+not a guarantee.
 
 **Two known blind spots.** Both come from the same heuristic: the tile check
 asks whether a frame's left half resembles its right half, which is anomalous

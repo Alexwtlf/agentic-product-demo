@@ -17,6 +17,7 @@ Not on Claude Code? The file is plain markdown; read it directly.
 ```bash
 npm install
 npm run studio                          # preview at localhost:3000, scrub the timeline
+sh scripts/preview.sh <id>              # stills on every beat + a contact sheet
 sh scripts/render.sh <id> [poster-frame] # render → deliver → gate
 bash scripts/add-sfx.sh <id>            # sound pass over the finished mp4
 node scripts/check-frames.mjs <file>    # the gate on its own
@@ -41,7 +42,22 @@ never on its own.
 - **`src/motion.ts` imports nothing.** Keep it that way: it is the part of this
   repo worth taking, and a dependency on the renderer ends that.
 - **The gate is not optional.** `render.sh` exits non-zero on its failure. Do
-  not loosen the thresholds in `check-frames.mjs` to make a render pass.
+  not loosen the thresholds in `check-frames.mjs` to make a render pass. It
+  keeps the frame sequence on a failure so the flagged JPEG can be opened.
+- **Intake is one block of three questions, not an interview** — scope, where
+  the clip lives, whether they already know the flow — each with your own
+  inference pre-marked as the recommendation. Use `AskUserQuestion` if the
+  harness has it. **Length is never one of them**: asked, it is answered
+  "short", and the demo rushes the steps it exists to show.
+- **The gate cannot see the picture.** It measures half-against-half
+  similarity and average luminance, and nothing else. A pointer pressing the
+  wrong element, a phase drawn empty, a panel over the header — all pass.
+  Run `scripts/preview.sh` and read the contact sheet before a full render.
+- **Pointer targets come from a rendered frame, never from the CSS**, and
+  every target needs two keys — arrive, then hold to `CLICK + 8`. With one
+  key `trackPos` starts easing toward the next target the frame it arrives,
+  and the click fires 20 frames into that move. Both halves of this have
+  shipped as a cursor visibly missing the button it pressed.
 
 ## Layout
 
