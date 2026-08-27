@@ -12,7 +12,12 @@ ID="${1:-demo}"
 # A poster is the first painted pixel of the <video> on a page, and it sits
 # there until autoplay kicks in. Pick a frame where the clip is at its
 # fullest, not one from a phase that is still assembling.
-POSTER_FRAME="${2:-300}"
+#
+# 366 is the demo at rest: the confirmation has landed, both panels are full,
+# and the pointer is clear of the button label. 300 — the obvious middle —
+# catches the side panel with a hole in it where the toast has not arrived
+# yet, which is exactly the "still assembling" frame the line above warns off.
+POSTER_FRAME="${2:-366}"
 
 # Delivery size. Default is the 8:5 page tile that matches the 1600x1000
 # canvas. A 16:9 composition ships at 1536:864 — both dimensions stay
@@ -75,13 +80,27 @@ PAD=${#NUM}
 PADDED=$(printf "%0${PAD}d" "$POSTER_FRAME")
 cp "$FRAMES/element-$PADDED.jpeg" "$OUT/$ID-poster.jpg"
 
-rm -rf "$FRAMES"
 ls -lh "$OUT"
 
 # The gate. Non-zero exit fails the render on purpose: a clip that flickers
 # is not a clip you ship and fix later, because you will not see it again
 # until someone else does.
-node scripts/check-frames.mjs "$OUT/$ID.mp4" $GATE_FLAGS
+#
+# The frame sequence is still on disk here, deliberately. references/render.md
+# tells you to open the flagged frame's JPEG and check whether the grid is
+# already in it — the step that decides whether the encoder is innocent. Clean
+# the frames up before the gate runs and that instruction cannot be followed,
+# which throws away the only reason to render through stills at all.
+if node scripts/check-frames.mjs "$OUT/$ID.mp4" $GATE_FLAGS; then
+  rm -rf "$FRAMES"
+else
+  echo
+  echo "Gate failed — frames kept for inspection:"
+  echo "  $FRAMES/element-<NNN>.jpeg"
+  echo "Open the flagged frame. If the JPEG is already a grid, the encoder is"
+  echo "innocent — see .claude/skills/product-demo/references/render.md."
+  exit 1
+fi
 
 # The gate passed, so the picture is finished — which is the moment the skill
 # says to ask about sound, and the moment it is easiest to skip because the
