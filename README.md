@@ -24,14 +24,18 @@ questions. [What that looks like](#working-with-an-agent).
 [Athana](https://athana.ai) — five movements, one flow, no screen recorder. It
 needs that product's own assets, so it is not the composition that ships here.*
 
-**This is:**
+**This is** — the whole of it, nothing cut:
 
-![The example composition, one frame from the end of the flow](docs/demo.jpg)
+![The example composition rendered end to end](docs/demo.gif)
 
-*`src/compositions/Demo.tsx`, the last beat of a sixteen-second clip you get
-from `npm run render` on a fresh clone — a query typed, results assembled, a
-filter applied, the report published. Generic on purpose: it is the file you
-copy and point at your own flow.*
+*`src/compositions/Demo.tsx`, sixteen seconds, exactly what `npm run render`
+gives you on a fresh clone. Watch what does **not** happen: no state snaps
+between frames. The field takes focus and gives it back, the query types, five
+rows stagger in rather than appearing together, the counter counts instead of
+jumping, the filter dims what it excludes and the total recounts, and the
+pointer stops on each thing before it presses it. That is the entire argument —
+a screen recording of a real app would show every one of those as a teleport.
+Generic on purpose: it is the file you copy and point at your own flow.*
 
 The hard part is not making a video. It is making one that does not look like
 a screen recording. This repo is the motion vocabulary, the render pipeline
