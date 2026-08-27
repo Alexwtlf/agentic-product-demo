@@ -313,7 +313,34 @@ a label, not a count, not a colour. If you cannot find where something on
 screen comes from, you have not finished reading — that is not a licence to
 write a convincing version.
 
-Four things to find, in this order.
+**First, adopt the palette. It is one command and it is not optional.**
+
+```sh
+npm run adopt                          # finds the stylesheet
+npm run adopt ../src/app/globals.css   # or point at it
+npm run adopt ../src/app/globals.css --curves
+```
+
+This rewrites `src/theme.css` from the product's own tokens and, with
+`--curves`, copies its `cubic-bezier` easings into `src/motion.ts`. Run it
+before you draw anything, and **read the report it prints** — a `!` line means
+that token fell back to this kit's placeholder, and a placeholder purple next
+to a real brand colour looks less like the product than plain grey would. If
+something falls back, find the product's name for it and add it to `ALIASES`
+in `scripts/adopt-theme.mjs` rather than hardcoding a hex in a composition.
+
+Two failures to expect. A product whose theme lives in JS rather than CSS —
+`tailwind.config.ts`, a `tokens.ts` — gives the script nothing; read the values
+and write `src/theme.css` yourself, keeping the kit's token *names*. And a
+stylesheet that defines only a light palette: the script says
+`no dark block found`, and you then owe the user a sentence about which stage
+the clip runs on, because a light app on the dark ground the title card and
+the outro sit on is a luminance cliff at both ends.
+
+**Do not skip it because the placeholder palette looks fine.** It does look
+fine — it was designed to. That is exactly why demos ship in it.
+
+Then four things to find, in this order.
 
 **1. The screen's own source, and what it actually renders.** Start at the
 route and follow the component tree to the end. A route is often a thin

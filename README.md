@@ -19,6 +19,7 @@ recording of a real app shows every one of those as a teleport.*
 
 ```bash
 npm install
+npm run adopt ../src/app/globals.css   # take your product's real tokens
 npm run studio     # preview at localhost:3000
 npm run preview    # stills on every beat + a contact sheet — seconds
 npm run render     # renders, stitches, and gates the result
@@ -195,15 +196,57 @@ level of motion rather than by element — the palette and the rules are in
 
 ### Then make it yours
 
-1. `src/theme.css` — swap the placeholder tokens for your product's. Nothing
-   downstream hardcodes a colour.
-2. `src/fonts.ts` — swap the face. A `fontFamily` string alone loads nothing;
-   skip `loadFont()` and every frame silently renders in a system fallback.
-3. `src/motion.ts` — replace the curves with the ones from your own
-   stylesheet, so the film moves the way the product does.
-4. `MyClip.tsx` — replace the flow with the real steps of your product, in the
+**Run this first, before you draw anything:**
+
+```bash
+npm run adopt                          # finds your stylesheet
+npm run adopt ../src/app/globals.css   # or name it
+npm run adopt ../app/globals.css --curves --dry-run
+```
+
+It reads your stylesheet and rewrites `src/theme.css` with your tokens —
+`--primary` becomes the kit's `--brand`, a `--poster`/`--backdrop` becomes
+`--ground`, and anything with no counterpart is *derived* from what did match
+rather than left as a stranger's purple. `--curves` also copies your
+`cubic-bezier` easings into `src/motion.ts`, so the film moves the way your
+product moves. `--dry-run` reports and writes nothing.
+
+It prints what it matched and what it could not, so a half-adopted palette is
+visible instead of silent:
+
+```
+  ✓ --brand              --primary                taken
+  ~ --brand-soft         —                        derived from --brand
+  ! --ground             —                        PLACEHOLDER — no match
+```
+
+Handles Tailwind 3 and 4, `:root` / `.dark` / `[data-theme]` /
+`prefers-color-scheme`, and one level of `var()` indirection. It takes the
+**dark** palette by default — the title card, the ground and the loop seam all
+sit on a dark stage — so pass `--mode=light` for a light demo.
+
+**It copies, it does not link.** Remotion cannot import an app stylesheet: that
+pulls Tailwind plugins and font files that live on the app's own serving path.
+So these are snapshots, the written file records its source and date, and a
+token you change in the app afterwards needs a rerun. Hand-edits to
+`src/theme.css` do not survive the next run — put a deliberate override in a
+composition, or add your name to `ALIASES` in the script.
+
+Then, by hand:
+
+1. `src/fonts.ts` — swap the face. The script tells you which one your
+   stylesheet asks for, but cannot swap it for you: the family has to exist in
+   `@remotion/google-fonts` or be wired up as a local file. A `fontFamily`
+   string alone loads nothing; skip `loadFont()` and every frame silently
+   renders in a system fallback.
+2. `MyClip.tsx` — replace the flow with the real steps of your product, in the
    real order, with copy taken from the live UI. A demo that walks a flow the
    product doesn't have proves nothing, however good it looks.
+
+The palette is the cheap half. **The copy is what makes a frame recognisable as
+your software** — the real button labels, the real row names, the real empty
+state. `npm run adopt` cannot do that part, and the skill is written to stop an
+agent inventing it.
 
 ---
 

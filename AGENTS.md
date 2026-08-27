@@ -16,6 +16,7 @@ Not on Claude Code? The file is plain markdown; read it directly.
 
 ```bash
 npm install
+npm run adopt ../src/app/globals.css    # take the product's tokens — do this FIRST
 npm run studio                          # preview at localhost:3000, scrub the timeline
 sh scripts/preview.sh <id>              # stills on every beat + a contact sheet
 sh scripts/render.sh <id> [poster-frame] # render → deliver → gate
