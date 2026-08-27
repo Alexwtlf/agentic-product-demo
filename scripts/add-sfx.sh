@@ -23,6 +23,7 @@
 #   pop     an element arrived                  DUR.panel
 #   swipe   an element travelled                DUR.sheet
 #   whoosh  THE SCREEN CHANGED — nothing else   phase change
+#           (whoosh_soft is the same event, quieter — for a title handover)
 #   impact  weight, a landing                   DUR.hero
 #   riser   waiting, before an event
 #   fold    everything collapses away

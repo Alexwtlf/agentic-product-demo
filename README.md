@@ -306,14 +306,15 @@ agent derives it from your flow and shows the arithmetic instead.
 > ```
 > t0    title     "Acme Studio" · "Ask a question, publish the answer"
 > 0     query     types "Revenue by channel, last quarter", hits Run
-> 96    results   five channel rows stagger in, counter lands on 2,481
-> 184   filter    "Paid only" lights, the count re-counts to 312
-> 274   publish   press, confirmation springs into the slot
+> 96    results   five channel rows stagger in, the counter lands on 1,940
+> 184   filter    "Paid only" lights, three rows dim, the total recounts
+> 274   publish   press, the confirmation springs into its slot
 > 380   out       folds back to the dark ground
 > ```
 >
-> Four steps and a reveal, standard pace: 66 + 4×100 + 240 + 30 = **736
-> frames, 24.5s**. Ends on the published report card. Say "punchy" for ~18s.
+> Four steps and a hold: 66 for the title, four steps just under the standard
+> 100, and 34 to fold out — **480 frames, 16s**. Ends on the published report.
+> Say "punchy" for ~12s.
 
 One line per phase, the frame it starts on, and the arithmetic behind the
 length — so a redirect costs you a word instead of a paragraph.
@@ -398,7 +399,7 @@ nothing at all**: the bezier solver, the clamped span and the damped
 oscillator behind `pop()` are written out in the file. It works unchanged
 under Framer Motion, in a canvas loop, or in React Native.
 
-Remotion itself is five symbols in three files — `registerRoot`,
+Remotion itself is five symbols in four files — `registerRoot`,
 `Composition`, `Sequence`, `AbsoluteFill`, `useCurrentFrame`, plus `loadFont`.
 It bundles the app, drives the frame clock, runs headless Chromium and gives
 you the Studio.

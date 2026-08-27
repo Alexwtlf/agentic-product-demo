@@ -280,13 +280,17 @@ and which single element carries that phase.
 > ```
 > t0    title     "Acme Studio" · "Ask a question, publish the answer"
 > 0     query     types "Revenue by channel, last quarter", hits Run
-> 96    results   five channel rows stagger in, counter lands on 2,481
-> 184   filter    "Paid only" lights, the count re-counts to 312
-> 274   publish   press, confirmation springs into the slot
+> 96    results   five channel rows stagger in, the counter lands on 1,940
+> 184   filter    "Paid only" lights, three rows dim, the total recounts
+> 274   publish   press, the confirmation springs into its slot
 > 380   out       folds back to the dark ground
 > ```
-> Four steps and a reveal, standard pace: 66 + 4×100 + 240 + 30 = 736 frames,
-> 24.5s. Ends on the published report card. Say "punchy" for ~18s.
+> Four steps and a hold: 66 for the title, four steps just under the standard
+> 100, and 34 to fold out — 480 frames, 16s. Ends on the published report. Say
+> "punchy" for ~12s.
+
+That list is `src/compositions/Demo.tsx`, frame for frame. Open it next to this
+and every number lines up.
 
 Then stop and let them read it. This is the only cheap moment left: a wrong
 flow costs one message here and a rebuilt composition later, and §1 question 2
