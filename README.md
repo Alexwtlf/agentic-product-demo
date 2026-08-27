@@ -21,9 +21,17 @@ questions. [What that looks like](#working-with-an-agent).
 ![A product demo rendered with this pipeline](docs/preview.gif)
 
 *Ten seconds out of a 42-second demo, made with this pipeline for
-[Athana](https://athana.ai) — five movements, one flow, no screen recorder. The
-example composition in this repo is a shorter, generic one — see
-[What's in it](#whats-in-it).*
+[Athana](https://athana.ai) — five movements, one flow, no screen recorder. It
+needs that product's own assets, so it is not the composition that ships here.*
+
+**This is:**
+
+![The example composition, one frame from the end of the flow](docs/demo.jpg)
+
+*`src/compositions/Demo.tsx`, the last beat of a sixteen-second clip you get
+from `npm run render` on a fresh clone — a query typed, results assembled, a
+filter applied, the report published. Generic on purpose: it is the file you
+copy and point at your own flow.*
 
 The hard part is not making a video. It is making one that does not look like
 a screen recording. This repo is the motion vocabulary, the render pipeline
