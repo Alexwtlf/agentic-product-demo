@@ -44,6 +44,15 @@ never on its own.
 - **The gate is not optional.** `render.sh` exits non-zero on its failure. Do
   not loosen the thresholds in `check-frames.mjs` to make a render pass. It
   keeps the frame sequence on a failure so the flagged JPEG can be opened.
+- **Nothing on screen may be invented.** Not a row, a card, a label, a count
+  or a colour. Lists live in a constants module, not in the page — grep a
+  visible string back to its definition and use the whole list in its order.
+  Light or dark is a property of the screen, not the product, and `--primary`
+  is usually not the accent the surface you are drawing actually uses. If you
+  cannot run the product, ask for a screenshot of every screen in the flow.
+  Skipping this produces this kit's template with the product's name on it,
+  and it renders clean and passes the gate. SKILL.md §1, "read the screen you
+  are about to rebuild".
 - **Intake is one block of three questions, not an interview** — scope, where
   the clip lives, whether they already know the flow — each with your own
   inference pre-marked as the recommendation. Use `AskUserQuestion` if the

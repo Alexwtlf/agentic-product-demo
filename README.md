@@ -316,6 +316,23 @@ reflex, and a demo that rushes the steps it exists to show is the result. The
 agent derives it from your flow and shows the arithmetic instead — which is
 what the shot list below is.
 
+### Then it reads the screen it is about to rebuild.
+
+The shot list settles what happens. What the clip *looks like* is decided by
+how much of your codebase the agent actually reads, and the skill makes that
+non-optional: **nothing on screen may be invented.**
+
+Lists on screen — rows, cards, chips, steps — almost never live in the page.
+They sit in a constants module with the real names, the real subtitles and the
+real order, and the agent is told to grep a visible string back to its
+definition and use the whole list. Light or dark is a property of the screen
+rather than of the product. `--primary` is often not the accent the surface
+you are drawing reaches for. Getting any of those wrong yields a clip that
+renders clean, passes the gate, and is not your software.
+
+If it cannot run your product, it asks for a screenshot of each screen — the
+one thing that genuinely is not in the code.
+
 ### Then it shows you the shot list, and waits.
 
 > ```

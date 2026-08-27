@@ -43,13 +43,16 @@ SETTLE="${SETTLE:-12}"
 
 OUT="out/$ID-preview"
 
-# id -> composition file, by the repo's own naming: demo -> Demo.tsx.
+# id -> composition file, by the repo's own naming: demo -> Demo.tsx, and
+# athana-marketing -> AthanaMarketing.tsx. Case and separators are stripped
+# from both sides before comparing, because a composition id is kebab-case in
+# Root.tsx while the file that backs it is PascalCase — matching on lowercase
+# alone finds the single-word ones and silently misses every other.
+norm() { echo "$1" | tr 'A-Z' 'a-z' | tr -cd 'a-z0-9'; }
 COMP=""
+WANT=$(norm "$ID")
 for f in src/compositions/*.tsx; do
-  base=$(basename "$f" .tsx)
-  if [ "$(echo "$base" | tr 'A-Z' 'a-z')" = "$(echo "$ID" | tr 'A-Z' 'a-z')" ]; then
-    COMP="$f"
-  fi
+  [ "$(norm "$(basename "$f" .tsx)")" = "$WANT" ] && COMP="$f"
 done
 
 if [ "$#" -gt 0 ]; then

@@ -301,6 +301,65 @@ Keep it to the phases. Do not list every entrance and colour ramp — a shot
 list nobody finishes reading is not a checkpoint, and the point is that they
 answer.
 
+### Then read the screen you are about to rebuild
+
+The shot list says *what happens*. This decides *what it looks like*, and it is
+the step that determines whether someone who uses the product every day
+recognises their own software. Skip it and you get this kit's template wearing
+the product's name in the title bar: plausible, generic, and not theirs.
+
+**Nothing that appears on screen may be invented.** Not a row, not a card, not
+a label, not a count, not a colour. If you cannot find where something on
+screen comes from, you have not finished reading — that is not a licence to
+write a convincing version.
+
+Four things to find, in this order.
+
+**1. The screen's own source, and what it actually renders.** Start at the
+route and follow the component tree to the end. A route is often a thin
+wrapper — `/app/studio/marketing` can turn out to be another workspace opened
+with a prop, and the thing you are drawing lives two files away.
+
+**2. The data behind every list on screen.** Rows, cards, chips, steps, tabs
+and empty states almost never live in the page. They sit in a constants or
+meta module, and that module holds the real names, the real subtitles and the
+real order. Take a string you can see and grep it back to where it is defined:
+
+```sh
+grep -rn "Brand guidelines" src/ | head
+```
+
+Then use the **whole** list, in its order. Drawing five of eight items is the
+same defect as inventing five — the viewer counts.
+
+**3. The theme this surface runs in.** Light or dark is a property of the
+screen, not of the product: a marketing page and an app shell routinely
+disagree, and one product can hold both. A product also usually has more than
+one accent — taking `--primary` because it is first in the stylesheet is
+exactly how a purple surface comes out green. Read the component and see which
+token it reaches for.
+
+**4. The arrangement.** Column count, group headings, the anatomy of a single
+card — index, title, subtitle, state — and the order they sit in. This is the
+part that makes it *their* screen rather than a screen.
+
+> **The case, and it is this repo's own.** An agent shooting Athana's Marketing
+> Studio pulled the button labels out of the code — `Render`,
+> `Rendering scene…`, `Describe the shot you want first` — and stopped there.
+> It then drew a five-row "Brand binder" it had made up, on a dark ground, in
+> the product's green. The real binder is eight documents with their own
+> subtitles, sitting in `src/lib/brand-knowledge-meta.ts`; the surface is light;
+> and it is purple, because it belongs to Mira and Mira has her own token. All
+> three facts were in the repo the agent was already reading. The clip rendered
+> clean, passed the gate, and was worthless — the same product's in-house
+> pipeline, given the same codebase, had reproduced all of it.
+
+**If you cannot run the product, ask for a screenshot of every screen in the
+flow.** Put the request in the same message as the shot list. It is the
+cheapest thing you will ever ask for, and it is the one thing genuinely not in
+the code: a screenshot settles arrangement, density and theme in a single look,
+where reading components gets you three of the four and lets you feel finished.
+
 ### A reshoot skips all of this
 
 Fixing flicker, changing a zoom, recutting an outro on a clip whose plot is
@@ -491,6 +550,13 @@ What to look for, in order: the pointer on the thing it presses (rule 10),
 every panel inside the frame and clear of the chrome, no phase drawn empty,
 nothing cut off at a panel edge, and the bottom of the canvas doing work
 (rule 9).
+
+**Then hold a still next to a screenshot of the real screen.** Same list, same
+length, same order? Same grouping and column count? Same ground, light or dark,
+and the same accent? This is the check for §1's rebuild step, and it is the
+only one that catches a clip which is beautifully animated and not the
+product. If nobody can produce a screenshot, that is itself the answer: ask
+for one before rendering, not after.
 
 What it cannot see is **time**. A stack of stills says nothing about a rhythm
 that drags, a beat that lands early, or a hold that outstays its welcome.
