@@ -3,6 +3,8 @@
 **Point your coding agent at your product and get a demo video back — built in
 React, not recorded off a screen.**
 
+[What's in it](#whats-in-it) · [Your first clip](#your-first-clip) · [Motion rules](#the-nine-motion-rules) · [Working with an agent](#working-with-an-agent) · [The frame gate](#the-frame-gate) · [Licensing](#licensing--read-this-before-you-build-on-it)
+
 The hard part is not making a video. It is making one that does not look like
 a screen recording. This repo is the motion vocabulary, the render pipeline and
 the frame gate that got mine there, plus the skill file that makes an agent
