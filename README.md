@@ -262,11 +262,11 @@ Four things have to be settled before a line of a composition gets written:
 > feature clip walks one flow start to finish. They are not the same clip at
 > different lengths.
 >
-> From that one answer it infers where the clip lives — whole product means a
+> That answer also decides where the clip lives — whole product means a
 > standalone launch video that plays once, one feature means a muted loop in a
-> page section — and **tells you which it assumed**, because that assumption
-> decides the loop seam, the sound, the length ceiling and the ending. Both
-> crossings happen; correcting it costs a word.
+> page section — and with it the loop seam, the sound, the length ceiling and
+> the ending. Both crossings happen, so the agent picks and **shows you the
+> pick** rather than assuming in silence.
 >
 > **1. What is being made on screen?** Not the feature — the thing the viewer
 > watches get built. "A revenue report", "a deploy going out".
@@ -281,25 +281,38 @@ Four things have to be settled before a line of a composition gets written:
 > need a real file, and there it may propose one from your disk but never
 > fabricate a stand-in.
 
-It also tells you, up front, that describing the flow yourself gets a better
-clip than letting it infer one — the code does not record which path converts,
-which step people get stuck on, or which feature shipped last week and needs
-the attention. That is an offer, not a gate: ignore it and it reads your
-product and proposes a flow anyway.
+### Most of that you never answer.
 
-Beyond that it asks only for what is not in the artifact — what the clip is
-*for*, and which payoff is the real one when several would do. Fragments are
-fine as answers. Handing you a form to fill in is not.
+Settled is not the same as asked. The agent drafts what it can read — the
+flow, the screens, the copy, the ending — and only three things come back to
+you, in one block rather than an interview:
 
-It comes as **one block of three questions**, not an interview: scope, where
-the clip lives, and whether you already know the steps. Each option says what
-it costs you, and the agent's own guess is pre-selected — so the usual answer
-is one click, and correcting it is one click too. In Claude Code that is a
-native picker; elsewhere it is the same three in a single message.
+- **Scope** — the whole product, or one feature?
+- **Where it lives** — a muted loop in a page section, or a standalone clip
+  that plays once? Pre-picked from your scope answer.
+- **The flow** — do you already know the steps you want walked, or should it
+  read your product and propose them?
+
+Each option carries a line saying what it costs you, and **the agent's own
+guess is already selected**. That is the difference between this and a form:
+you are correcting a plan, not filling one in. The usual answer is one click,
+and so is the correction. In Claude Code it is a native picker; elsewhere the
+same three arrive in a single message.
+
+The third one matters more than it looks. Reading your product gives a
+*plausible* flow, never the right one — the code does not record which path
+converts, which step people get stuck on, or which feature shipped last week
+and needs the attention. Only you know that. It is offered once and never
+pressed: ignore it and the agent reads your product and proposes a flow anyway.
+
+Beyond those three it asks for exactly one more thing, and only sometimes:
+which file the ending shows, when the payoff is media your product generates
+and several would do. Fragments are fine as answers everywhere.
 
 **Length is deliberately not among them.** Asked, it gets answered "short" on
 reflex, and a demo that rushes the steps it exists to show is the result. The
-agent derives it from your flow and shows the arithmetic instead.
+agent derives it from your flow and shows the arithmetic instead — which is
+what the shot list below is.
 
 ### Then it shows you the shot list, and waits.
 
