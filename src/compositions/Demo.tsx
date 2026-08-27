@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import {
   DUR,
@@ -17,9 +18,13 @@ import { AppFrame, BODY_Y, Cursor, Orb, abs, downAt, trackPos } from "../chrome"
 import { TYPE } from "../fonts";
 
 /**
- * The worked example. Every helper in motion.ts is used at least once here,
- * so this file doubles as the reference: to shoot a new clip, copy this
+ * The worked example, and the reference: to shoot a new clip, copy this
  * structure and change the flow, not the pipeline.
+ *
+ * `leave()` is the one helper in motion.ts this file does not reach for, and
+ * that is not an oversight. It returns a transform, and the only thing
+ * leaving here is the container holding the whole UI — which hard rule 2
+ * forbids transforming. It is for elements inside a phase, never the phase.
  *
  * The flow it walks is deliberately generic — type a query, get results,
  * filter them, publish. Replace it with the real steps of your own product,
@@ -55,14 +60,39 @@ const CLICKS = [FIELD_CLICK, RUN_CLICK, CHIP_CLICK, PUBLISH_CLICK];
 
 /* The pointer path. Keys are absolute frames; trackPos eases between them,
  * so the cursor is always already at a target before the click beat lands
- * on it. Give it ~16 frames to travel any real distance. */
+ * on it. Give it ~16 frames to travel any real distance.
+ *
+ * Every one of these has to be the CENTRE of the thing being pressed, and
+ * the only way to know is to render the click frame and look. Nothing in the
+ * pipeline can catch a miss: the press animation fires, the state changes,
+ * the gate sees a clean frame — the cursor is just sitting somewhere else
+ * while it all happens. This target was 84px above the chip row, on the
+ * counter, for exactly that reason. Absolute layout is what makes the
+ * choreography possible; it is also what lets a coordinate quietly rot.
+ *
+ * PAIR EVERY TARGET WITH A HOLD. trackPos eases from one key straight into
+ * the next, so a lone key means the pointer starts leaving the instant it
+ * arrives — and the click beat, twenty frames later, fires somewhere along
+ * the way out. On the chip that was a 21px drift onto the bottom edge: the
+ * cursor visibly missing the thing it had just pressed. A real pointer
+ * stops, presses, and only then goes. The second key at CLICK + HOLD is what
+ * makes it stop. Publish never showed the defect only because it happens to
+ * be followed by a key at the same coordinates — the drift scales with the
+ * distance to the next target, so the worst miss is always the beat before
+ * the longest move. */
+const HOLD = 8; // press() runs DUR.press * 2 = 8 frames; outlast it
+
+/* Targets measured off a rendered frame, not estimated from the CSS. */
 const POINTER = [
   { at: 0, x: 860, y: 700 },
-  { at: FIELD_CLICK - 14, x: 420, y: 192 },
-  { at: RUN_CLICK - 16, x: 1448, y: 192 },
-  { at: CHIP_CLICK - 20, x: 1214, y: 372 },
-  { at: PUBLISH_CLICK - 22, x: 1306, y: 918 },
-  { at: DEMO_LEN, x: 1306, y: 918 },
+  { at: FIELD_CLICK - 14, x: 420, y: 194 },
+  { at: FIELD_CLICK + HOLD, x: 420, y: 194 },
+  { at: RUN_CLICK - 16, x: 1484, y: 194 },
+  { at: RUN_CLICK + HOLD, x: 1484, y: 194 },
+  { at: CHIP_CLICK - 20, x: 1285, y: 465 },
+  { at: CHIP_CLICK + HOLD, x: 1285, y: 465 },
+  { at: PUBLISH_CLICK - 22, x: 1305, y: 917 },
+  { at: DEMO_LEN, x: 1305, y: 917 },
 ];
 
 /* ------------------------------------------------------------- geometry -- */
@@ -73,13 +103,19 @@ const RESULTS = { x: 48, y: 262, w: 980, h: 596 };
 const SIDE = { x: 1060, y: 262, w: 492, h: 596 };
 const PUBLISH = { x: 1060, y: 884, w: 492, h: 68 };
 
+/* Bars are proportional to the figures beside them: 0.92 is the widest, and
+ * every other bar is n/1204 of it. A chart whose bars disagree with its own
+ * numbers is the kind of thing a viewer cannot name but does register. */
 const ROWS = [
-  { label: "Organic search", bar: 0.92, n: "1,204" },
-  { label: "Paid social", bar: 0.71, n: "642" },
-  { label: "Email", bar: 0.55, n: "389" },
-  { label: "Referral", bar: 0.34, n: "171" },
-  { label: "Direct", bar: 0.19, n: "75" },
+  { label: "Organic search", bar: 0.92, n: 1204, paid: false },
+  { label: "Paid social", bar: 0.6, n: 786, paid: true },
+  { label: "Paid search", bar: 0.39, n: 512, paid: true },
+  { label: "Email", bar: 0.3, n: 389, paid: false },
+  { label: "Referral", bar: 0.13, n: 171, paid: false },
 ];
+
+const TOTAL_ALL = 3062; // the five rows above
+const TOTAL_PAID = 1298; // the two marked paid
 
 const CHIPS = ["All channels", "Paid only", "Organic"];
 const LIT_CHIP = 1;
@@ -99,19 +135,37 @@ export function Demo() {
   const pointer = trackPos(frame, POINTER);
   const down = downAt(frame, CLICKS);
 
-  const focus = ramp(frame, FIELD_CLICK, DUR.chip);
+  /* Focus arrives on the click and leaves again on Run. A field that stays
+   * lit for the rest of the clip — caret still blinking while the pointer is
+   * across the screen pressing something else — reads as a mock-up, for the
+   * same reason hard rule 4 is about typed text: real software answers the
+   * pointer, and the eye knows what a focus ring means. */
+  const focus =
+    ramp(frame, FIELD_CLICK, DUR.chip) * (1 - ramp(frame, RUN_CLICK, DUR.chip));
   const text = typed(frame, TYPE_AT, PROMPT);
   const typing = text.length > 0 && text.length < PROMPT.length;
+
+  const publishIn = enter(frame, ROWS_AT + 10, { dur: DUR.panel, y: 10 });
 
   /* Two counters in sequence. The first counts up from nothing when the
    * results land; the second travels from that value to the filtered one
    * when the chip is clicked. A number that jumps between the two is the
    * loudest teleport on screen, because the eye is already reading it. */
-  const publishIn = enter(frame, ROWS_AT + 10, { dur: DUR.panel, y: 10 });
-
-  const total = countTo(frame, COUNT_AT, 2481);
+  const matched = countTo(frame, COUNT_AT, 1940);
   const refilter = ramp(frame, REFILTER_AT, DUR.sheet);
-  const shown = frame < REFILTER_AT ? total : Math.round(mix(refilter, 2481, 312));
+  const shown =
+    frame < REFILTER_AT ? matched : Math.round(mix(refilter, 1940, 312));
+
+  /* The filter has to act on the thing it filters. A chip lighting up while
+   * five channels sit there untouched — Organic search among them, under a
+   * "Paid only" filter — is the clip contradicting itself, and it does it in
+   * the frame the poster gets cut from. The excluded rows dim and their bars
+   * retract; the total recounts to the paid subset. */
+  const totalShown =
+    frame < REFILTER_AT
+      ? TOTAL_ALL
+      : Math.round(mix(refilter, TOTAL_ALL, TOTAL_PAID));
+  const chipOn = ramp(frame, CHIP_CLICK, DUR.chip);
 
   return (
     <AbsoluteFill style={{ background: "var(--ground)" }}>
@@ -230,12 +284,23 @@ export function Demo() {
              * block being pasted in. */
             const at = ROWS_AT + 8;
             const grow = ramp(frame, at + i * 2 + 4, DUR.hero, EASE.out);
+            /* 0 while the row belongs in the result, 1 once the filter has
+             * excluded it — staggered by index, so the list resolves rather
+             * than blinking. Same reasoning as the entrance stagger. */
+            const cut = row.paid
+              ? 0
+              : ramp(frame, REFILTER_AT + i * 2, DUR.sheet, EASE.out);
+            const ent = enterAt(frame, at, i, { y: 10 });
             return (
               <div
                 key={row.label}
                 style={{
                   marginTop: 34,
-                  ...enterAt(frame, at, i, { y: 10 }),
+                  ...ent,
+                  /* Dimmed, not removed. A row that vanishes takes its slot
+                   * with it and the four below jump up a line; leaving it at
+                   * a quarter says "excluded" without moving anything. */
+                  opacity: (ent.opacity as number) * mix(cut, 1, 0.26),
                 }}
               >
                 <div
@@ -247,7 +312,9 @@ export function Demo() {
                   }}
                 >
                   <span>{row.label}</span>
-                  <span style={{ color: "var(--muted-foreground)" }}>{row.n}</span>
+                  <span style={{ color: "var(--muted-foreground)" }}>
+                    {row.n.toLocaleString("en-US")}
+                  </span>
                 </div>
                 <div
                   style={{
@@ -266,7 +333,7 @@ export function Demo() {
                       borderRadius: 99,
                       background: "var(--brand)",
                       transformOrigin: "left center",
-                      transform: `scaleX(${grow.toFixed(4)})`,
+                      transform: `scaleX(${(grow * mix(cut, 1, 0)).toFixed(4)})`,
                     }}
                   />
                 </div>
@@ -291,7 +358,9 @@ export function Demo() {
             }}
           >
             <span style={{ color: "var(--muted-foreground)" }}>Total</span>
-            <span style={{ fontWeight: 600 }}>2,481</span>
+            <span style={{ fontWeight: 600 }}>
+              {totalShown.toLocaleString("en-US")}
+            </span>
           </div>
         </div>
 
@@ -325,7 +394,11 @@ export function Demo() {
 
           <div style={{ display: "flex", gap: 10, marginTop: 30, flexWrap: "wrap" }}>
             {CHIPS.map((chip, i) => {
-              const lit = i === LIT_CHIP ? ramp(frame, CHIP_CLICK, DUR.chip) : 0;
+              /* A filter group always has exactly one selection. "All
+               * channels" is lit from the start and hands over to "Paid
+               * only" on the same ramp — three inert chips are a control in
+               * no state at all, which no real UI ever shows. */
+              const lit = i === 0 ? 1 - chipOn : i === LIT_CHIP ? chipOn : 0;
               return (
                 <div
                   key={chip}
@@ -345,10 +418,32 @@ export function Demo() {
             })}
           </div>
 
-          {[
-            ["Top channel", "Organic search"],
-            ["Period", "Q3 2026"],
-          ].map(([k, v], i) => (
+          {(
+            [
+              [
+                "Top channel",
+                /* Text cannot tween, so the two states cross-fade in place
+                 * rather than swapping on a single frame. The incoming label
+                 * is an absolutely-positioned overlay: opacity only, nothing
+                 * here can reflow the row it sits in. */
+                <span style={{ position: "relative", display: "inline-block" }}>
+                  <span style={{ opacity: 1 - refilter }}>Organic search</span>
+                  <span
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      top: 0,
+                      whiteSpace: "nowrap",
+                      opacity: refilter,
+                    }}
+                  >
+                    Paid social
+                  </span>
+                </span>,
+              ],
+              ["Period", "Q3 2026"],
+            ] as [string, ReactNode][]
+          ).map(([k, v], i) => (
             <div
               key={k}
               style={{
