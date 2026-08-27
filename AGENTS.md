@@ -48,8 +48,9 @@ never on its own.
   or a colour. Lists live in a constants module, not in the page — grep a
   visible string back to its definition and use the whole list in its order.
   Light or dark is a property of the screen, not the product, and `--primary`
-  is usually not the accent the surface you are drawing actually uses. If you
-  cannot run the product, ask for a screenshot of every screen in the flow.
+  is usually not the accent the surface you are drawing actually uses. Arrangement
+  and density live in the markup and its classes — read them, do not ask for a
+  screenshot.
   Skipping this produces this kit's template with the product's name on it,
   and it renders clean and passes the gate. SKILL.md §1, "read the screen you
   are about to rebuild".

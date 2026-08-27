@@ -339,9 +339,19 @@ one accent — taking `--primary` because it is first in the stylesheet is
 exactly how a purple surface comes out green. Read the component and see which
 token it reaches for.
 
-**4. The arrangement.** Column count, group headings, the anatomy of a single
-card — index, title, subtitle, state — and the order they sit in. This is the
-part that makes it *their* screen rather than a screen.
+**4. The arrangement, out of the markup itself.** Column count, group
+headings, the anatomy of a single card — index, title, subtitle, state — and
+the order they sit in. This is the part that makes it *their* screen rather
+than a screen, and it is the part an agent skips, because reading a component
+tree for layout is slower than inventing one that looks reasonable.
+
+It is all there. A grid class carries the column count. Padding, gap and the
+type scale carry the density, which is most of why a rebuild looks like a
+different product even when every label is right. Nesting carries the grouping.
+Read the classes on the elements you are drawing and resolve them — a
+`grid-cols-2 gap-4 p-6` with `text-sm text-muted-foreground` under a
+`text-lg font-semibold` is a card you can rebuild exactly, and guessing at it
+is how eight documents in two columns became five rows in one.
 
 > **The case, and it is this repo's own.** An agent shooting Athana's Marketing
 > Studio pulled the button labels out of the code — `Render`,
@@ -354,11 +364,17 @@ part that makes it *their* screen rather than a screen.
 > clean, passed the gate, and was worthless — the same product's in-house
 > pipeline, given the same codebase, had reproduced all of it.
 
-**If you cannot run the product, ask for a screenshot of every screen in the
-flow.** Put the request in the same message as the shot list. It is the
-cheapest thing you will ever ask for, and it is the one thing genuinely not in
-the code: a screenshot settles arrangement, density and theme in a single look,
-where reading components gets you three of the four and lets you feel finished.
+**Do not ask for a screenshot.** Everything a screenshot would tell you is in
+the markup, and asking for one is how an agent gives itself permission to skip
+step 4. The arrangement is the JSX; the density is the padding, the gap and the
+type scale on those elements; the ground and the accent are the classes and the
+tokens they resolve to. Read them. It is more work than glancing at a picture
+and it is the work.
+
+A screenshot is worth asking for in exactly one case: the screen only exists
+once real data is in it and the shape of that data is not in the repo — a chart
+of the user's own numbers, a feed of their own posts. Ask for that one screen,
+name why, and read the rest.
 
 ### A reshoot skips all of this
 

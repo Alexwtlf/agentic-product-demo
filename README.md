@@ -330,8 +330,10 @@ rather than of the product. `--primary` is often not the accent the surface
 you are drawing reaches for. Getting any of those wrong yields a clip that
 renders clean, passes the gate, and is not your software.
 
-If it cannot run your product, it asks for a screenshot of each screen — the
-one thing that genuinely is not in the code.
+It does not ask you for screenshots. Everything a screenshot would settle —
+the arrangement, the density, the ground, the accent — is in the markup and the
+classes, and asking for a picture is how an agent gives itself permission not
+to read them.
 
 ### Then it shows you the shot list, and waits.
 
